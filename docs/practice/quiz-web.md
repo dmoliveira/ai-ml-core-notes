@@ -9,6 +9,8 @@ Use this browser-based simulator to practice interview rounds with a simple, lea
 - Enable optional section timer budget per topic.
 - Optionally submit final score to a custom leaderboard endpoint.
 - Get final score plus fastest/slowest question timing.
+
+Use [Verify Shared Result](verify-shared-result.md) to validate a signed shared URL.
 - Track progress locally in your browser (attempt count, best score, recent runs).
 
 Start with topics + question count, then use Advanced settings only when needed.
