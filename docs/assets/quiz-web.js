@@ -10,10 +10,15 @@ const quizState = {
   finished: false,
   reviewMode: false,
   lastResult: null,
+  sectionLimitSeconds: 0,
+  currentSectionTopic: "",
+  sectionStartMs: 0,
+  sectionRemainingSeconds: 0,
 };
 
 const QUESTIONS_PATH = "../../assets/quiz-questions.json";
 const PROGRESS_STORAGE_KEY = "aiml_quiz_web_progress_v1";
+const SHARE_SIGNATURE_SALT = "aiml-quiz-share-v1";
 
 function shuffleArray(items, seed) {
   const result = [...items];
@@ -48,18 +53,148 @@ function updateActionButtons() {
   const finalizeButton = document.getElementById("quiz-finalize");
   const exportJsonButton = document.getElementById("quiz-export-json");
   const exportCsvButton = document.getElementById("quiz-export-csv");
+  const copyShareButton = document.getElementById("quiz-copy-share");
 
   if (quizState.finished) {
     nextButton.disabled = true;
     finalizeButton.disabled = true;
     exportJsonButton.disabled = false;
     exportCsvButton.disabled = false;
+    copyShareButton.disabled = !quizState.lastResult || !quizState.lastResult.shareUrl;
     return;
   }
 
   finalizeButton.disabled = !quizState.reviewMode;
   exportJsonButton.disabled = true;
   exportCsvButton.disabled = true;
+  copyShareButton.disabled = true;
+}
+
+function isAdaptiveModeEnabled() {
+  return document.getElementById("quiz-adaptive-mode").value === "on";
+}
+
+function difficultyRank(value) {
+  const mapping = {
+    junior: 0,
+    mid: 1,
+    senior: 2,
+  };
+  return mapping[value] ?? 1;
+}
+
+function adaptNextQuestionOrder(lastAnswer) {
+  if (!isAdaptiveModeEnabled() || quizState.reviewMode || quizState.finished) {
+    return;
+  }
+  const nextIndex = quizState.currentIndex + 1;
+  if (nextIndex >= quizState.selectedQuestions.length) {
+    return;
+  }
+
+  const desiredRank = lastAnswer.correct
+    ? Math.min(2, difficultyRank(lastAnswer.difficulty) + 1)
+    : Math.max(0, difficultyRank(lastAnswer.difficulty) - 1);
+
+  let candidateIndex = -1;
+  for (let idx = nextIndex; idx < quizState.selectedQuestions.length; idx += 1) {
+    const question = quizState.selectedQuestions[idx];
+    const answered = quizState.answers.some((item) => item.id === question.id);
+    if (!answered && difficultyRank(question.difficulty) === desiredRank) {
+      candidateIndex = idx;
+      break;
+    }
+  }
+
+  if (candidateIndex > nextIndex) {
+    const swap = quizState.selectedQuestions[nextIndex];
+    quizState.selectedQuestions[nextIndex] = quizState.selectedQuestions[candidateIndex];
+    quizState.selectedQuestions[candidateIndex] = swap;
+  }
+}
+
+function computeShareSignature(payloadJson) {
+  const combined = `${payloadJson}|${SHARE_SIGNATURE_SALT}`;
+  let hash = 0;
+  for (let idx = 0; idx < combined.length; idx += 1) {
+    hash = (hash << 5) - hash + combined.charCodeAt(idx);
+    hash |= 0;
+  }
+  return Math.abs(hash).toString(36);
+}
+
+function encodeSharePayload(payload) {
+  const json = JSON.stringify(payload);
+  const encoded = btoa(unescape(encodeURIComponent(json)));
+  return {
+    encoded,
+    signature: computeShareSignature(json),
+  };
+}
+
+function decodeSharePayload(encoded, signature) {
+  try {
+    const json = decodeURIComponent(escape(atob(encoded)));
+    if (computeShareSignature(json) !== signature) {
+      return null;
+    }
+    return JSON.parse(json);
+  } catch {
+    return null;
+  }
+}
+
+function buildShareUrl(summary) {
+  const payload = {
+    scorePercent: summary.scorePercent,
+    pointsPercent: summary.pointsPercent,
+    correct: summary.correct,
+    total: summary.total,
+    scoringMode: summary.scoringMode,
+    timestamp: new Date().toISOString(),
+  };
+  const packed = encodeSharePayload(payload);
+  const url = new URL(window.location.href);
+  url.searchParams.set("result", packed.encoded);
+  url.searchParams.set("sig", packed.signature);
+  return url.toString();
+}
+
+async function copyShareLink() {
+  if (!quizState.lastResult || !quizState.lastResult.shareUrl) {
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(quizState.lastResult.shareUrl);
+    document.getElementById("quiz-feedback").textContent = "Share link copied to clipboard.";
+  } catch {
+    document.getElementById("quiz-feedback").textContent = "Unable to copy automatically. Use the generated link in results.";
+  }
+}
+
+function renderSharedResultCard() {
+  const encoded = new URL(window.location.href).searchParams.get("result");
+  const signature = new URL(window.location.href).searchParams.get("sig");
+  const target = document.getElementById("quiz-shared-view");
+  if (!encoded || !signature) {
+    target.innerHTML = "";
+    return;
+  }
+  const payload = decodeSharePayload(encoded, signature);
+  if (!payload) {
+    target.innerHTML = "<p>Shared result signature invalid.</p>";
+    return;
+  }
+
+  target.innerHTML = `
+    <h3>Shared Result Snapshot</h3>
+    <ul>
+      <li><strong>Score:</strong> ${payload.correct}/${payload.total} (${Number(payload.scorePercent).toFixed(1)}%)</li>
+      <li><strong>Points:</strong> ${Number(payload.pointsPercent).toFixed(1)}%</li>
+      <li><strong>Scoring mode:</strong> ${payload.scoringMode}</li>
+      <li><strong>Shared at:</strong> ${new Date(payload.timestamp).toLocaleString()}</li>
+    </ul>
+  `;
 }
 
 function toCsvRow(values) {
@@ -148,6 +283,34 @@ function exportResultsCsv() {
 function selectedTopics() {
   const select = document.getElementById("quiz-topics");
   return [...select.options].filter((option) => option.selected).map((option) => option.value);
+}
+
+function updateSectionTimerDisplay() {
+  const sectionEl = document.getElementById("quiz-section-timer");
+  if (quizState.sectionLimitSeconds <= 0) {
+    sectionEl.textContent = "--:--";
+    sectionEl.classList.remove("quiz-section-over");
+    return;
+  }
+  const remaining = Math.max(0, quizState.sectionRemainingSeconds);
+  sectionEl.textContent = formatSeconds(remaining);
+  if (quizState.sectionRemainingSeconds <= 0) {
+    sectionEl.classList.add("quiz-section-over");
+  } else {
+    sectionEl.classList.remove("quiz-section-over");
+  }
+}
+
+function setSectionTopic(topic) {
+  if (quizState.sectionLimitSeconds <= 0) {
+    return;
+  }
+  if (quizState.currentSectionTopic !== topic) {
+    quizState.currentSectionTopic = topic;
+    quizState.sectionStartMs = Date.now();
+    quizState.sectionRemainingSeconds = quizState.sectionLimitSeconds;
+    updateSectionTimerDisplay();
+  }
 }
 
 function scoreLabel(score) {
@@ -292,6 +455,7 @@ function renderQuestion() {
 
   const answered = quizState.answers.find((item) => item.id === question.id);
   const disabled = answered && !quizState.reviewMode ? "disabled" : "";
+  setSectionTopic(question.topic);
   if (!answered) {
     quizState.questionStartMs = Date.now();
   }
@@ -378,6 +542,7 @@ function collectAnswer() {
   } else {
     quizState.answers.push(nextAnswer);
   }
+  adaptNextQuestionOrder(nextAnswer);
   renderQuestion();
 }
 
@@ -570,6 +735,7 @@ function finishQuiz(timedOut) {
       <thead><tr><th>Difficulty</th><th>Correct</th><th>Accuracy</th></tr></thead>
       <tbody>${difficultyRows || "<tr><td colspan='3'>No difficulty data.</td></tr>"}</tbody>
     </table>
+    <p><strong>Share:</strong> <a href="${quizState.lastResult ? quizState.lastResult.shareUrl : "#"}" target="_blank" rel="noopener">Open shareable result link</a></p>
   `;
 
   saveAttempt({
@@ -596,6 +762,8 @@ function finishQuiz(timedOut) {
     slowestQuestionSeconds: slowest,
     scoringMode: getScoringMode(),
   };
+  quizState.lastResult.shareUrl = buildShareUrl(quizState.lastResult);
+  results.querySelector("a").setAttribute("href", quizState.lastResult.shareUrl);
   renderProgress();
 
   document.getElementById("quiz-next").disabled = true;
@@ -610,6 +778,12 @@ function tickTimer() {
   }
   quizState.remainingSeconds -= 1;
   document.getElementById("quiz-timer").textContent = formatSeconds(quizState.remainingSeconds);
+
+  if (quizState.sectionLimitSeconds > 0 && quizState.currentSectionTopic) {
+    const elapsed = (Date.now() - quizState.sectionStartMs) / 1000;
+    quizState.sectionRemainingSeconds = quizState.sectionLimitSeconds - elapsed;
+    updateSectionTimerDisplay();
+  }
 }
 
 function startTimer(limitSeconds) {
@@ -627,11 +801,16 @@ function resetQuiz() {
   quizState.finished = false;
   quizState.reviewMode = false;
   quizState.lastResult = null;
+  quizState.sectionLimitSeconds = 0;
+  quizState.currentSectionTopic = "";
+  quizState.sectionStartMs = 0;
+  quizState.sectionRemainingSeconds = 0;
   quizState.questionStartMs = 0;
   document.getElementById("quiz-board").innerHTML = "<p>Configure the quiz and click Start.</p>";
   document.getElementById("quiz-feedback").textContent = "";
   document.getElementById("quiz-results").innerHTML = "";
   document.getElementById("quiz-timer").textContent = "00:00";
+  updateSectionTimerDisplay();
   document.getElementById("quiz-next").disabled = true;
   document.getElementById("quiz-finalize").disabled = true;
   renderProgress();
@@ -643,6 +822,7 @@ function startQuiz() {
   const seed = Number(document.getElementById("quiz-seed").value);
   const topics = selectedTopics();
   const weights = getDifficultyWeights();
+  const sectionLimit = Number(document.getElementById("quiz-section-limit").value) || 0;
 
   const pool = quizState.questions.filter((question) => topics.length === 0 || topics.includes(question.topic));
   if (pool.length === 0) {
@@ -657,12 +837,17 @@ function startQuiz() {
   quizState.finished = false;
   quizState.reviewMode = false;
   quizState.lastResult = null;
+  quizState.sectionLimitSeconds = Math.max(0, sectionLimit);
+  quizState.currentSectionTopic = "";
+  quizState.sectionStartMs = 0;
+  quizState.sectionRemainingSeconds = quizState.sectionLimitSeconds;
   quizState.startTimeMs = Date.now();
   quizState.questionStartMs = Date.now();
 
   document.getElementById("quiz-results").innerHTML = "";
   document.getElementById("quiz-next").disabled = false;
   document.getElementById("quiz-finalize").disabled = true;
+  updateSectionTimerDisplay();
   renderQuestion();
   startTimer(Math.max(30, limitSeconds));
 }
@@ -714,6 +899,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("quiz-finalize").addEventListener("click", finalizeQuiz);
   document.getElementById("quiz-export-json").addEventListener("click", exportResultsJson);
   document.getElementById("quiz-export-csv").addEventListener("click", exportResultsCsv);
+  document.getElementById("quiz-copy-share").addEventListener("click", copyShareLink);
   document.getElementById("quiz-reset").addEventListener("click", resetQuiz);
   initializeQuiz();
+  renderSharedResultCard();
 });

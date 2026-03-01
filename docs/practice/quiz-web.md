@@ -5,6 +5,8 @@ Use this browser-based simulator to practice interview rounds with timer pressur
 - Pick topics and total question count.
 - Tune difficulty balancing by percentage (junior, mid, senior).
 - Choose scoring mode (standard, negative marking, confidence-based).
+- Add adaptive difficulty routing based on live quiz performance.
+- Enable optional section timer budget per topic.
 - Get final score plus fastest/slowest question timing.
 - Track progress locally in your browser (attempt count, best score, recent runs).
 
@@ -25,6 +27,9 @@ Use this browser-based simulator to practice interview rounds with timer pressur
 
       <label for="quiz-seed">Random seed</label>
       <input id="quiz-seed" type="number" min="1" value="42">
+
+      <label for="quiz-section-limit">Section timer per topic (seconds, 0 = off)</label>
+      <input id="quiz-section-limit" type="number" min="0" max="1800" value="0">
     </div>
     <div class="quiz-control">
       <label for="quiz-weight-junior">Difficulty mix - junior (%)</label>
@@ -42,6 +47,12 @@ Use this browser-based simulator to practice interview rounds with timer pressur
         <option value="negative">Negative Marking</option>
         <option value="confidence">Confidence Based</option>
       </select>
+
+      <label for="quiz-adaptive-mode">Adaptive difficulty</label>
+      <select id="quiz-adaptive-mode">
+        <option value="on">On</option>
+        <option value="off">Off</option>
+      </select>
     </div>
   </div>
 
@@ -51,8 +62,10 @@ Use this browser-based simulator to practice interview rounds with timer pressur
     <button id="quiz-finalize" type="button">Finalize Quiz</button>
     <button id="quiz-export-json" type="button">Export JSON</button>
     <button id="quiz-export-csv" type="button">Export CSV</button>
+    <button id="quiz-copy-share" type="button">Copy Share Link</button>
     <button id="quiz-reset" type="button">Reset</button>
     <strong>Timer: <span id="quiz-timer">00:00</span></strong>
+    <strong>Section: <span id="quiz-section-timer">--:--</span></strong>
   </div>
 
   <div class="quiz-board" id="quiz-board">
@@ -60,6 +73,7 @@ Use this browser-based simulator to practice interview rounds with timer pressur
   </div>
   <div class="quiz-feedback" id="quiz-feedback"></div>
   <div class="quiz-results" id="quiz-results"></div>
+  <div class="quiz-shared-view" id="quiz-shared-view"></div>
 
   <div class="quiz-progress" id="quiz-progress">
     <h3>Saved Progress</h3>

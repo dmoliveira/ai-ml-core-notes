@@ -72,6 +72,11 @@
   color: #ffffff;
 }
 
+#quiz-copy-share {
+  background: #7c3aed;
+  color: #ffffff;
+}
+
 .quiz-board {
   border: 1px solid #cbd5e1;
   border-radius: 10px;
@@ -143,6 +148,22 @@
 
 .quiz-support a {
   font-weight: 700;
+}
+
+.quiz-shared-view {
+  margin-top: 1rem;
+  border: 1px dashed #94a3b8;
+  border-radius: 10px;
+  padding: 0.8rem;
+  background: #f8fafc;
+}
+
+.quiz-shared-view h3 {
+  margin-top: 0;
+}
+
+#quiz-section-timer.quiz-section-over {
+  color: #b91c1c;
 }
 
 .quiz-results table {

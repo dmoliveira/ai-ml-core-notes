@@ -14,7 +14,7 @@ This tool lets learners simulate interview rounds with random questions, topic f
 
 Prefer a visual experience? Use [Interview Quiz Web UI](quiz-web.md) on GitHub Pages.
 
-The web UI includes per-question timing stats, configurable difficulty mix (junior/mid/senior), scoring modes, review-before-submit flow, result export (JSON/CSV), and browser-saved progress tracking.
+The web UI includes per-question timing stats, configurable difficulty mix (junior/mid/senior), adaptive difficulty routing, optional per-topic section timer, scoring modes, review-before-submit flow, result export (JSON/CSV), shareable signed result links, and browser-saved progress tracking.
 
 ## Run it
 
