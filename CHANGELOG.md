@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.7.0] - 2026-03-01
+
+- Simplified quiz UX with a minimalist default flow and collapsible advanced settings.
+- Added attempt integrity metadata and optional leaderboard endpoint submission support.
+- Added share snapshot enrichment with topic breakdown and timing percentile context.
+- Refreshed README style to a more emoji-rich, learner-first format inspired by master-philosophers.
+- Added Playwright smoke script and executed full page-route screenshot checks on built docs.
+
 ## [0.6.0] - 2026-03-01
 
 - Added adaptive next-question routing to adjust upcoming difficulty from live performance.
