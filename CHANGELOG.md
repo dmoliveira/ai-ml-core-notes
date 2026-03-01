@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.3.0] - 2026-03-01
+
+- Added a GitHub Pages interview quiz web UI with topic selection, question count control, randomization seed, and countdown timer.
+- Added end-of-quiz analytics with score, timing, and topic-level accuracy breakdown.
+- Added a sync test to ensure web quiz questions stay aligned with the CLI quiz source.
+
 ## [0.2.0] - 2026-03-01
 
 - Added interview prep tracks for junior, mid, and senior roles, plus a reusable question bank.
