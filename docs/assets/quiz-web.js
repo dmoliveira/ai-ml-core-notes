@@ -8,6 +8,8 @@ const quizState = {
   startTimeMs: 0,
   questionStartMs: 0,
   finished: false,
+  reviewMode: false,
+  lastResult: null,
 };
 
 const QUESTIONS_PATH = "../../assets/quiz-questions.json";
@@ -41,6 +43,108 @@ function clearTimer() {
   }
 }
 
+function updateActionButtons() {
+  const nextButton = document.getElementById("quiz-next");
+  const finalizeButton = document.getElementById("quiz-finalize");
+  const exportJsonButton = document.getElementById("quiz-export-json");
+  const exportCsvButton = document.getElementById("quiz-export-csv");
+
+  if (quizState.finished) {
+    nextButton.disabled = true;
+    finalizeButton.disabled = true;
+    exportJsonButton.disabled = false;
+    exportCsvButton.disabled = false;
+    return;
+  }
+
+  finalizeButton.disabled = !quizState.reviewMode;
+  exportJsonButton.disabled = true;
+  exportCsvButton.disabled = true;
+}
+
+function toCsvRow(values) {
+  return values
+    .map((value) => {
+      const text = String(value ?? "");
+      const escaped = text.replaceAll('"', '""');
+      return `"${escaped}"`;
+    })
+    .join(",");
+}
+
+function triggerDownload(fileName, mimeType, payload) {
+  const blob = new Blob([payload], { type: mimeType });
+  const objectUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = objectUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(objectUrl);
+}
+
+function exportResultsJson() {
+  if (!quizState.finished || !quizState.lastResult) {
+    return;
+  }
+  const payload = {
+    summary: quizState.lastResult,
+    answers: quizState.answers,
+    exportedAt: new Date().toISOString(),
+  };
+  triggerDownload(
+    "quiz-results.json",
+    "application/json;charset=utf-8",
+    `${JSON.stringify(payload, null, 2)}\n`,
+  );
+}
+
+function exportResultsCsv() {
+  if (!quizState.finished || !quizState.lastResult) {
+    return;
+  }
+
+  const byId = new Map(quizState.selectedQuestions.map((question) => [question.id, question]));
+  const rows = [
+    toCsvRow([
+      "question_id",
+      "topic",
+      "difficulty",
+      "prompt",
+      "selected_index",
+      "selected_option",
+      "correct",
+      "confidence",
+      "points",
+      "max_points",
+      "question_seconds",
+    ]),
+  ];
+
+  for (const answer of quizState.answers) {
+    const question = byId.get(answer.id);
+    const selectedOption = question && question.options[answer.selected] ? question.options[answer.selected] : "";
+    rows.push(
+      toCsvRow([
+        answer.id,
+        answer.topic,
+        answer.difficulty,
+        question ? question.prompt : "",
+        answer.selected,
+        selectedOption,
+        answer.correct,
+        answer.confidence,
+        answer.points,
+        answer.maxPoints,
+        answer.questionSeconds.toFixed(2),
+      ]),
+    );
+  }
+
+  triggerDownload("quiz-results.csv", "text/csv;charset=utf-8", `${rows.join("\n")}\n`);
+}
+
 function selectedTopics() {
   const select = document.getElementById("quiz-topics");
   return [...select.options].filter((option) => option.selected).map((option) => option.value);
@@ -57,6 +161,35 @@ function scoreLabel(score) {
     return "Developing";
   }
   return "Needs practice";
+}
+
+function getScoringMode() {
+  return document.getElementById("quiz-scoring-mode").value;
+}
+
+function scoreAnswer(correct, scoringMode, confidence) {
+  if (scoringMode === "negative") {
+    return {
+      points: correct ? 1 : -0.25,
+      maxPoints: 1,
+    };
+  }
+  if (scoringMode === "confidence") {
+    const confidenceWeights = {
+      low: { correct: 1, incorrect: 0 },
+      medium: { correct: 2, incorrect: -1 },
+      high: { correct: 3, incorrect: -2 },
+    };
+    const profile = confidenceWeights[confidence] || confidenceWeights.medium;
+    return {
+      points: correct ? profile.correct : profile.incorrect,
+      maxPoints: 3,
+    };
+  }
+  return {
+    points: correct ? 1 : 0,
+    maxPoints: 1,
+  };
 }
 
 function getDifficultyWeights() {
@@ -158,7 +291,7 @@ function renderQuestion() {
   }
 
   const answered = quizState.answers.find((item) => item.id === question.id);
-  const disabled = answered ? "disabled" : "";
+  const disabled = answered && !quizState.reviewMode ? "disabled" : "";
   if (!answered) {
     quizState.questionStartMs = Date.now();
   }
@@ -170,25 +303,38 @@ function renderQuestion() {
     })
     .join("");
 
+  const confidenceHtml = `
+    <div class="quiz-meta">
+      <label for="quiz-confidence"><strong>Confidence:</strong></label>
+      <select id="quiz-confidence" ${disabled}>
+        <option value="low" ${answered && answered.confidence === "low" ? "selected" : ""}>Low</option>
+        <option value="medium" ${!answered || answered.confidence === "medium" ? "selected" : ""}>Medium</option>
+        <option value="high" ${answered && answered.confidence === "high" ? "selected" : ""}>High</option>
+      </select>
+    </div>
+  `;
+
   board.innerHTML = `
     <div class="quiz-meta">
       <span>Question ${quizState.currentIndex + 1}/${quizState.selectedQuestions.length}</span>
       <span>Topic: ${question.topic}</span>
       <span>Difficulty: ${question.difficulty}</span>
     </div>
+    ${confidenceHtml}
     <div class="quiz-prompt">${question.prompt}</div>
     <div class="quiz-options">${optionsHtml}</div>
   `;
 
   if (answered) {
     const text = answered.correct
-      ? `Correct. Time for question: ${answered.questionSeconds.toFixed(1)}s.`
+      ? `Correct. Time for question: ${answered.questionSeconds.toFixed(1)}s. Points: ${answered.points.toFixed(2)}.`
       : `Incorrect. Correct answer: ${String.fromCharCode(65 + question.answer_index)}. ${question.explanation}`;
     feedback.textContent = text;
   }
 
   const nextButton = document.getElementById("quiz-next");
   nextButton.disabled = !answered;
+  updateActionButtons();
 }
 
 function collectAnswer() {
@@ -206,19 +352,82 @@ function collectAnswer() {
 
   const selectedIndex = Number(selected.value);
   const correct = selectedIndex === question.answer_index;
+  const confidenceSelect = document.getElementById("quiz-confidence");
+  const confidence = confidenceSelect ? confidenceSelect.value : "medium";
+  const scoringMode = getScoringMode();
+  const scoring = scoreAnswer(correct, scoringMode, confidence);
   const elapsedSinceStart = Math.max(0, (Date.now() - quizState.startTimeMs) / 1000);
   const questionSeconds = Math.max(0, (Date.now() - quizState.questionStartMs) / 1000);
 
-  quizState.answers.push({
+  const nextAnswer = {
     id: question.id,
     topic: question.topic,
     difficulty: question.difficulty,
     selected: selectedIndex,
+    confidence,
     correct,
+    points: scoring.points,
+    maxPoints: scoring.maxPoints,
     elapsedSeconds: elapsedSinceStart,
     questionSeconds,
-  });
+  };
+
+  const existingIndex = quizState.answers.findIndex((item) => item.id === question.id);
+  if (existingIndex >= 0) {
+    quizState.answers[existingIndex] = nextAnswer;
+  } else {
+    quizState.answers.push(nextAnswer);
+  }
   renderQuestion();
+}
+
+function renderReviewPanel() {
+  const results = document.getElementById("quiz-results");
+  const cells = quizState.selectedQuestions
+    .map((question, index) => {
+      const answered = quizState.answers.some((item) => item.id === question.id);
+      const classes = ["quiz-review-jump"];
+      if (index === quizState.currentIndex) {
+        classes.push("quiz-review-current");
+      }
+      const marker = answered ? "ok" : "pending";
+      return `<button type="button" class="${classes.join(" ")}" data-index="${index}">Q${index + 1} ${marker}</button>`;
+    })
+    .join("");
+
+  results.innerHTML = `
+    <h3>Review Mode</h3>
+    <p>Jump between questions, adjust answers/confidence, then finalize the quiz.</p>
+    <div class="quiz-review-grid">${cells}</div>
+  `;
+
+  const buttons = results.querySelectorAll(".quiz-review-jump");
+  for (const button of buttons) {
+    button.addEventListener("click", () => {
+      const index = Number(button.getAttribute("data-index"));
+      if (!Number.isNaN(index)) {
+        quizState.currentIndex = index;
+        renderQuestion();
+        renderReviewPanel();
+      }
+    });
+  }
+}
+
+function enterReviewMode() {
+  quizState.reviewMode = true;
+  quizState.currentIndex = 0;
+  document.getElementById("quiz-feedback").textContent = "All questions answered. Review before final submit.";
+  renderQuestion();
+  renderReviewPanel();
+  updateActionButtons();
+}
+
+function finalizeQuiz() {
+  if (!quizState.reviewMode || quizState.finished) {
+    return;
+  }
+  finishQuiz(false);
 }
 
 function topicStats() {
@@ -307,18 +516,22 @@ function renderProgress() {
 
 function finishQuiz(timedOut) {
   quizState.finished = true;
+  quizState.reviewMode = false;
   clearTimer();
 
   const total = quizState.answers.length;
   const correct = quizState.answers.filter((item) => item.correct).length;
   const score = total === 0 ? 0 : (correct / total) * 100;
+  const points = quizState.answers.reduce((sum, item) => sum + item.points, 0);
+  const maxPoints = quizState.answers.reduce((sum, item) => sum + item.maxPoints, 0);
+  const pointsPercent = maxPoints === 0 ? 0 : (Math.max(0, points) / maxPoints) * 100;
   const totalTimeUsed = (Date.now() - quizState.startTimeMs) / 1000;
   const avgTime = total === 0 ? 0 : totalTimeUsed / total;
   const fastest = total === 0 ? 0 : Math.min(...quizState.answers.map((item) => item.questionSeconds));
   const slowest = total === 0 ? 0 : Math.max(...quizState.answers.map((item) => item.questionSeconds));
 
   const status = timedOut ? "Time expired." : "Quiz complete.";
-  const summary = `${status} Score ${correct}/${total} (${score.toFixed(1)}%) - ${scoreLabel(score)}`;
+  const summary = `${status} Score ${correct}/${total} (${score.toFixed(1)}%), points ${points.toFixed(2)}/${maxPoints.toFixed(2)} - ${scoreLabel(score)}`;
   document.getElementById("quiz-feedback").textContent = summary;
 
   const topicRows = topicStats()
@@ -340,6 +553,7 @@ function finishQuiz(timedOut) {
     <h3>Final Stats</h3>
     <ul>
       <li><strong>Score:</strong> ${correct}/${total} (${score.toFixed(1)}%)</li>
+      <li><strong>Points:</strong> ${points.toFixed(2)}/${maxPoints.toFixed(2)} (${pointsPercent.toFixed(1)}%)</li>
       <li><strong>Total time:</strong> ${totalTimeUsed.toFixed(1)}s</li>
       <li><strong>Average/question:</strong> ${avgTime.toFixed(1)}s</li>
       <li><strong>Fastest question:</strong> ${fastest.toFixed(1)}s</li>
@@ -363,11 +577,29 @@ function finishQuiz(timedOut) {
     total,
     correct,
     scorePercent: score,
+    points,
+    pointsPercent,
     totalTimeSeconds: totalTimeUsed,
   });
+
+  quizState.lastResult = {
+    timedOut,
+    total,
+    correct,
+    scorePercent: score,
+    points,
+    maxPoints,
+    pointsPercent,
+    totalTimeSeconds: totalTimeUsed,
+    averageQuestionSeconds: avgTime,
+    fastestQuestionSeconds: fastest,
+    slowestQuestionSeconds: slowest,
+    scoringMode: getScoringMode(),
+  };
   renderProgress();
 
   document.getElementById("quiz-next").disabled = true;
+  updateActionButtons();
 }
 
 function tickTimer() {
@@ -393,12 +625,15 @@ function resetQuiz() {
   quizState.currentIndex = 0;
   quizState.answers = [];
   quizState.finished = false;
+  quizState.reviewMode = false;
+  quizState.lastResult = null;
   quizState.questionStartMs = 0;
   document.getElementById("quiz-board").innerHTML = "<p>Configure the quiz and click Start.</p>";
   document.getElementById("quiz-feedback").textContent = "";
   document.getElementById("quiz-results").innerHTML = "";
   document.getElementById("quiz-timer").textContent = "00:00";
   document.getElementById("quiz-next").disabled = true;
+  document.getElementById("quiz-finalize").disabled = true;
   renderProgress();
 }
 
@@ -420,11 +655,14 @@ function startQuiz() {
   quizState.currentIndex = 0;
   quizState.answers = [];
   quizState.finished = false;
+  quizState.reviewMode = false;
+  quizState.lastResult = null;
   quizState.startTimeMs = Date.now();
   quizState.questionStartMs = Date.now();
 
   document.getElementById("quiz-results").innerHTML = "";
   document.getElementById("quiz-next").disabled = false;
+  document.getElementById("quiz-finalize").disabled = true;
   renderQuestion();
   startTimer(Math.max(30, limitSeconds));
 }
@@ -443,10 +681,13 @@ function nextQuestion() {
 
   quizState.currentIndex += 1;
   if (quizState.currentIndex >= quizState.selectedQuestions.length) {
-    finishQuiz(false);
+    enterReviewMode();
     return;
   }
   renderQuestion();
+  if (quizState.reviewMode) {
+    renderReviewPanel();
+  }
 }
 
 async function initializeQuiz() {
@@ -470,6 +711,9 @@ async function initializeQuiz() {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("quiz-start").addEventListener("click", startQuiz);
   document.getElementById("quiz-next").addEventListener("click", nextQuestion);
+  document.getElementById("quiz-finalize").addEventListener("click", finalizeQuiz);
+  document.getElementById("quiz-export-json").addEventListener("click", exportResultsJson);
+  document.getElementById("quiz-export-csv").addEventListener("click", exportResultsCsv);
   document.getElementById("quiz-reset").addEventListener("click", resetQuiz);
   initializeQuiz();
 });

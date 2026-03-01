@@ -4,6 +4,7 @@ Use this browser-based simulator to practice interview rounds with timer pressur
 
 - Pick topics and total question count.
 - Tune difficulty balancing by percentage (junior, mid, senior).
+- Choose scoring mode (standard, negative marking, confidence-based).
 - Get final score plus fastest/slowest question timing.
 - Track progress locally in your browser (attempt count, best score, recent runs).
 
@@ -34,12 +35,22 @@ Use this browser-based simulator to practice interview rounds with timer pressur
 
       <label for="quiz-weight-senior">Difficulty mix - senior (%)</label>
       <input id="quiz-weight-senior" type="number" min="0" max="100" value="20">
+
+      <label for="quiz-scoring-mode">Scoring mode</label>
+      <select id="quiz-scoring-mode">
+        <option value="standard">Standard</option>
+        <option value="negative">Negative Marking</option>
+        <option value="confidence">Confidence Based</option>
+      </select>
     </div>
   </div>
 
   <div class="quiz-actions">
     <button id="quiz-start" type="button">Start Quiz</button>
     <button id="quiz-next" type="button">Submit / Next</button>
+    <button id="quiz-finalize" type="button">Finalize Quiz</button>
+    <button id="quiz-export-json" type="button">Export JSON</button>
+    <button id="quiz-export-csv" type="button">Export CSV</button>
     <button id="quiz-reset" type="button">Reset</button>
     <strong>Timer: <span id="quiz-timer">00:00</span></strong>
   </div>
@@ -54,6 +65,12 @@ Use this browser-based simulator to practice interview rounds with timer pressur
     <h3>Saved Progress</h3>
     <p>Your attempts and best score are stored in your browser.</p>
     <div id="quiz-progress-content"></div>
+  </div>
+
+  <div class="quiz-support">
+    <h3>Support This Open Project</h3>
+    <p>If this material helps your AI learning journey, consider a small contribution.</p>
+    <p><a href="https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00" target="_blank" rel="noopener">Contribute via Stripe</a></p>
   </div>
 </div>
 
