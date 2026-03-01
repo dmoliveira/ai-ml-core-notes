@@ -1,0 +1,110 @@
+[
+  {
+    "id": "fnd-001",
+    "topic": "foundations",
+    "difficulty": "junior",
+    "prompt": "Which metric is most sensitive to class imbalance in binary classification?",
+    "options": ["Accuracy", "Precision", "Recall", "F1 Score"],
+    "answer_index": 0,
+    "explanation": "Accuracy can stay high while minority class errors are severe."
+  },
+  {
+    "id": "fnd-002",
+    "topic": "foundations",
+    "difficulty": "junior",
+    "prompt": "What does overfitting usually indicate?",
+    "options": ["Model under-parameterized", "Model memorizes train noise", "Data leakage impossible", "Metrics always improve"],
+    "answer_index": 1,
+    "explanation": "Overfitting often means the model captures noise and fails to generalize."
+  },
+  {
+    "id": "ml-001",
+    "topic": "machine-learning",
+    "difficulty": "junior",
+    "prompt": "Which technique helps estimate generalization performance?",
+    "options": ["Feature dropping", "Cross-validation", "Grid search only", "Data augmentation only"],
+    "answer_index": 1,
+    "explanation": "Cross-validation evaluates model behavior across multiple folds."
+  },
+  {
+    "id": "ml-002",
+    "topic": "machine-learning",
+    "difficulty": "mid",
+    "prompt": "A calibrated model mainly improves which aspect?",
+    "options": ["Training speed", "Probability reliability", "Feature count", "Data collection cost"],
+    "answer_index": 1,
+    "explanation": "Calibration aligns predicted probabilities with observed outcomes."
+  },
+  {
+    "id": "dl-001",
+    "topic": "deep-learning",
+    "difficulty": "mid",
+    "prompt": "What is a common reason to use gradient clipping?",
+    "options": ["Reduce embedding size", "Avoid exploding gradients", "Increase batch size", "Replace normalization"],
+    "answer_index": 1,
+    "explanation": "Gradient clipping prevents unstable updates from very large gradients."
+  },
+  {
+    "id": "dl-002",
+    "topic": "deep-learning",
+    "difficulty": "mid",
+    "prompt": "Transformers primarily rely on what mechanism?",
+    "options": ["Convolutions", "Self-attention", "Decision trees", "Kernel tricks"],
+    "answer_index": 1,
+    "explanation": "Self-attention enables token-to-token contextual relationships."
+  },
+  {
+    "id": "aie-001",
+    "topic": "ai-engineering",
+    "difficulty": "mid",
+    "prompt": "Which is a strong offline metric for retrieval quality?",
+    "options": ["P99 latency", "Recall@k", "CPU utilization", "Cost per token"],
+    "answer_index": 1,
+    "explanation": "Recall@k measures how often relevant documents appear in top-k results."
+  },
+  {
+    "id": "aie-002",
+    "topic": "ai-engineering",
+    "difficulty": "senior",
+    "prompt": "What is the first action during AI quality incident triage?",
+    "options": ["Tune hyperparameters", "Validate blast radius", "Retrain immediately", "Disable all alerts"],
+    "answer_index": 1,
+    "explanation": "Scoping impact determines urgency and safe containment actions."
+  },
+  {
+    "id": "agt-001",
+    "topic": "ai-agents",
+    "difficulty": "mid",
+    "prompt": "In an agent loop, why include tool call validation?",
+    "options": ["To reduce memory usage only", "To enforce safe structured actions", "To increase token count", "To avoid logging"],
+    "answer_index": 1,
+    "explanation": "Validation ensures tool inputs/outputs meet schema and policy expectations."
+  },
+  {
+    "id": "agt-002",
+    "topic": "ai-agents",
+    "difficulty": "senior",
+    "prompt": "Which evaluation pattern best catches agent regressions?",
+    "options": ["Single happy-path demo", "Versioned benchmark suites", "Manual ad-hoc checks", "Cost-only monitoring"],
+    "answer_index": 1,
+    "explanation": "Versioned suites provide repeatable, comparable regression detection."
+  },
+  {
+    "id": "ipr-001",
+    "topic": "interview-prep",
+    "difficulty": "junior",
+    "prompt": "A model has high precision and low recall. What does it imply?",
+    "options": ["Many false positives", "Many false negatives", "Perfect calibration", "No class imbalance"],
+    "answer_index": 1,
+    "explanation": "Low recall means relevant positives are frequently missed."
+  },
+  {
+    "id": "ipr-002",
+    "topic": "interview-prep",
+    "difficulty": "senior",
+    "prompt": "For AI system design interviews, what matters most?",
+    "options": ["Algorithm trivia only", "Trade-off clarity and failure handling", "Coding speed only", "Vendor-specific syntax"],
+    "answer_index": 1,
+    "explanation": "Interviewers prioritize decision quality, constraints, and resilience thinking."
+  }
+]

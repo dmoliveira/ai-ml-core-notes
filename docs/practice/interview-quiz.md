@@ -10,6 +10,10 @@ This tool lets learners simulate interview rounds with random questions, topic f
 - Global quiz timer in seconds
 - Final stats: score, time spent, average response time, topic-level accuracy
 
+## Browser version
+
+Prefer a visual experience? Use [Interview Quiz Web UI](quiz-web.md) on GitHub Pages.
+
 ## Run it
 
 ```bash

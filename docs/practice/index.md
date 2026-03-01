@@ -24,6 +24,7 @@ Hands-on labs help convert theory into engineering skill.
 ## Interview quiz mode
 
 - [Interview Quiz Simulator](interview-quiz.md): timed quizzes with random picks, topic filtering, and score stats
+- [Interview Quiz Web UI](quiz-web.md): browser flow with multi-topic selection, countdown timer, and final analytics
 
 ## Recommended datasets and platforms
 
