@@ -7,6 +7,7 @@
 [![Wiki](https://img.shields.io/badge/wiki-enabled-informational)](https://github.com/dmoliveira/ai-ml-core-notes/wiki)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Made for Learners](https://img.shields.io/badge/goal-fast%20AI%20learning-orange)](docs/plan/project-plan.md)
+[![Support](https://img.shields.io/badge/support-Stripe-1d4ed8)](https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00)
 
 > Learn AI in the most practical way, build production-minded AI agents, and prepare for interviews from beginner to advanced.
 
@@ -52,6 +53,7 @@ If this helped you get your first AI role, level up, or pass an interview, consi
 
 - 💖 GitHub Sponsors: `https://github.com/sponsors/dmoliveira`
 - ☕ Buy Me a Coffee: `https://buymeacoffee.com/dmoliveira`
+- 🎯 Stripe Support: `https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00`
 - 🌟 Star and share this repo with someone learning AI
 
 Project sponsorship links are configured in `.github/FUNDING.yml`.

@@ -20,3 +20,9 @@ Welcome to a practical AI learning system that helps you move from fundamentals 
 - Design robust AI agent systems with tooling and memory
 - Communicate trade-offs in interviews and real projects
 - Build confidence through repeatable lab exercises and retrospectives
+
+## Support this work
+
+If this open project accelerates your learning, you can support maintenance at:
+
+- https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00
