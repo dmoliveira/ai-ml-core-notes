@@ -3,8 +3,8 @@
 ![Hero Banner](docs/assets/hero.svg)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://USERNAME.github.io/REPO/)
-[![Wiki](https://img.shields.io/badge/wiki-enabled-informational)](https://github.com/USERNAME/REPO/wiki)
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://dmoliveira.github.io/ai-ml-core-notes/)
+[![Wiki](https://img.shields.io/badge/wiki-enabled-informational)](https://github.com/dmoliveira/ai-ml-core-notes/wiki)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Made for Learners](https://img.shields.io/badge/goal-fast%20AI%20learning-orange)](docs/plan/project-plan.md)
 
@@ -50,8 +50,8 @@ You get both short summaries and deep dives, with examples in Python, Julia, and
 
 If this helped you get your first AI role, level up, or pass an interview, consider supporting:
 
-- 💖 GitHub Sponsors: `https://github.com/sponsors/USERNAME`
-- ☕ Buy Me a Coffee: `https://buymeacoffee.com/USERNAME`
+- 💖 GitHub Sponsors: `https://github.com/sponsors/dmoliveira`
+- ☕ Buy Me a Coffee: `https://buymeacoffee.com/dmoliveira`
 - 🌟 Star and share this repo with someone learning AI
 
 Project sponsorship links are configured in `.github/FUNDING.yml`.

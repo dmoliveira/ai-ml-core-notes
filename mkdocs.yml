@@ -1,8 +1,8 @@
 site_name: AI/ML Core Notes
 site_description: Fast-track AI learning and AI engineering interview preparation
-site_url: https://USERNAME.github.io/REPO/
-repo_url: https://github.com/USERNAME/REPO
-repo_name: USERNAME/REPO
+site_url: https://dmoliveira.github.io/ai-ml-core-notes/
+repo_url: https://github.com/dmoliveira/ai-ml-core-notes
+repo_name: dmoliveira/ai-ml-core-notes
 
 theme:
   name: material
