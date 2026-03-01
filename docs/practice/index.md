@@ -26,6 +26,7 @@ Hands-on labs help convert theory into engineering skill.
 - [Interview Quiz Simulator](interview-quiz.md): timed quizzes with random picks, topic filtering, and score stats
 - [Interview Quiz Web UI](quiz-web.md): browser flow with multi-topic selection, countdown timer, and final analytics
 - [Leaderboard Endpoint](leaderboard-endpoint.md): optional serverless endpoint contract for shared rankings
+- [Verify Shared Result](verify-shared-result.md): signature checker for shared quiz links
 
 ## Recommended datasets and platforms
 
