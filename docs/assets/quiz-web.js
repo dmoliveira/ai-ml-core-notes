@@ -14,6 +14,10 @@ const quizState = {
   currentSectionTopic: "",
   sectionStartMs: 0,
   sectionRemainingSeconds: 0,
+  startedAtIso: "",
+  finishedAtIso: "",
+  attemptId: "",
+  integrity: null,
 };
 
 const QUESTIONS_PATH = "../../assets/quiz-questions.json";
@@ -54,6 +58,8 @@ function updateActionButtons() {
   const exportJsonButton = document.getElementById("quiz-export-json");
   const exportCsvButton = document.getElementById("quiz-export-csv");
   const copyShareButton = document.getElementById("quiz-copy-share");
+  const leaderboardButton = document.getElementById("quiz-submit-leaderboard");
+  const endpointValue = String(document.getElementById("quiz-leaderboard-endpoint").value || "").trim();
 
   if (quizState.finished) {
     nextButton.disabled = true;
@@ -61,6 +67,7 @@ function updateActionButtons() {
     exportJsonButton.disabled = false;
     exportCsvButton.disabled = false;
     copyShareButton.disabled = !quizState.lastResult || !quizState.lastResult.shareUrl;
+    leaderboardButton.disabled = !endpointValue;
     return;
   }
 
@@ -68,6 +75,7 @@ function updateActionButtons() {
   exportJsonButton.disabled = true;
   exportCsvButton.disabled = true;
   copyShareButton.disabled = true;
+  leaderboardButton.disabled = true;
 }
 
 function isAdaptiveModeEnabled() {
@@ -151,6 +159,8 @@ function buildShareUrl(summary) {
     correct: summary.correct,
     total: summary.total,
     scoringMode: summary.scoringMode,
+    timing: summary.timing,
+    topicBreakdown: summary.topicBreakdown,
     timestamp: new Date().toISOString(),
   };
   const packed = encodeSharePayload(payload);
@@ -192,9 +202,126 @@ function renderSharedResultCard() {
       <li><strong>Score:</strong> ${payload.correct}/${payload.total} (${Number(payload.scorePercent).toFixed(1)}%)</li>
       <li><strong>Points:</strong> ${Number(payload.pointsPercent).toFixed(1)}%</li>
       <li><strong>Scoring mode:</strong> ${payload.scoringMode}</li>
+      <li><strong>Time percentile rank:</strong> ${payload.timing ? Number(payload.timing.percentileRank).toFixed(1) : "n/a"}%</li>
       <li><strong>Shared at:</strong> ${new Date(payload.timestamp).toLocaleString()}</li>
     </ul>
+    <h4>Topic breakdown</h4>
+    <ul>
+      ${(payload.topicBreakdown || [])
+        .map(
+          (item) => `<li>${item.topic}: ${item.correct}/${item.total} (${Number(item.accuracyPercent).toFixed(1)}%)</li>`,
+        )
+        .join("") || "<li>No topic data.</li>"}
+    </ul>
   `;
+}
+
+function percentileRank(values, value) {
+  if (!values.length) {
+    return 0;
+  }
+  const sorted = [...values].sort((a, b) => a - b);
+  let belowOrEqual = 0;
+  for (const item of sorted) {
+    if (item <= value) {
+      belowOrEqual += 1;
+    }
+  }
+  return (belowOrEqual / sorted.length) * 100;
+}
+
+function computeTimingPercentiles(totalTimeUsed) {
+  const attempts = readProgress();
+  const series = attempts.map((item) => item.totalTimeSeconds).filter((item) => Number.isFinite(item));
+  if (series.length === 0) {
+    return {
+      p50ThresholdSeconds: totalTimeUsed,
+      p90ThresholdSeconds: totalTimeUsed,
+      percentileRank: 100,
+    };
+  }
+  const sorted = [...series].sort((a, b) => a - b);
+  const p50Index = Math.max(0, Math.floor((sorted.length - 1) * 0.5));
+  const p90Index = Math.max(0, Math.floor((sorted.length - 1) * 0.9));
+  return {
+    p50ThresholdSeconds: sorted[p50Index],
+    p90ThresholdSeconds: sorted[p90Index],
+    percentileRank: percentileRank(series, totalTimeUsed),
+  };
+}
+
+function topicBreakdownSnapshot() {
+  return topicStats().map(([topic, values]) => ({
+    topic,
+    correct: values.correct,
+    total: values.total,
+    accuracyPercent: values.total === 0 ? 0 : (values.correct / values.total) * 100,
+  }));
+}
+
+function generateAttemptId() {
+  const seed = `${Date.now()}-${Math.random()}-${navigator.userAgent}`;
+  return computeShareSignature(seed).slice(0, 12);
+}
+
+function computeAttemptIntegrity() {
+  const questionOrder = quizState.selectedQuestions.map((item) => item.id);
+  const answerDigestBase = quizState.answers
+    .map((item) => `${item.id}:${item.selected}:${item.correct}:${item.points}:${item.questionSeconds.toFixed(3)}`)
+    .join("|");
+  const orderDigest = computeShareSignature(questionOrder.join("|"));
+  const answerDigest = computeShareSignature(answerDigestBase);
+  const summaryDigest = computeShareSignature(
+    `${quizState.attemptId}|${quizState.startedAtIso}|${quizState.finishedAtIso}|${orderDigest}|${answerDigest}`,
+  );
+
+  return {
+    attemptId: quizState.attemptId,
+    orderDigest,
+    answerDigest,
+    summaryDigest,
+    client: {
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    },
+  };
+}
+
+async function submitLeaderboard() {
+  const endpoint = String(document.getElementById("quiz-leaderboard-endpoint").value || "").trim();
+  const feedback = document.getElementById("quiz-leaderboard-feedback");
+  if (!quizState.finished || !quizState.lastResult) {
+    feedback.textContent = "Complete a quiz before submitting leaderboard.";
+    return;
+  }
+  if (!endpoint) {
+    feedback.textContent = "Set leaderboard endpoint in Advanced settings first.";
+    return;
+  }
+
+  const payload = {
+    displayName: String(document.getElementById("quiz-display-name").value || "Learner").trim() || "Learner",
+    summary: quizState.lastResult,
+    integrity: quizState.integrity,
+    submittedAt: new Date().toISOString(),
+  };
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error(`Leaderboard submission failed (${response.status})`);
+    }
+    feedback.textContent = "Leaderboard submitted successfully.";
+  } catch (error) {
+    feedback.textContent = String(error.message || error);
+  }
 }
 
 function toCsvRow(values) {
@@ -226,6 +353,7 @@ function exportResultsJson() {
   const payload = {
     summary: quizState.lastResult,
     answers: quizState.answers,
+    integrity: quizState.integrity,
     exportedAt: new Date().toISOString(),
   };
   triggerDownload(
@@ -243,6 +371,8 @@ function exportResultsCsv() {
   const byId = new Map(quizState.selectedQuestions.map((question) => [question.id, question]));
   const rows = [
     toCsvRow([
+      "attempt_id",
+      "summary_digest",
       "question_id",
       "topic",
       "difficulty",
@@ -262,6 +392,8 @@ function exportResultsCsv() {
     const selectedOption = question && question.options[answer.selected] ? question.options[answer.selected] : "";
     rows.push(
       toCsvRow([
+        quizState.integrity ? quizState.integrity.attemptId : "",
+        quizState.integrity ? quizState.integrity.summaryDigest : "",
         answer.id,
         answer.topic,
         answer.difficulty,
@@ -694,6 +826,30 @@ function finishQuiz(timedOut) {
   const avgTime = total === 0 ? 0 : totalTimeUsed / total;
   const fastest = total === 0 ? 0 : Math.min(...quizState.answers.map((item) => item.questionSeconds));
   const slowest = total === 0 ? 0 : Math.max(...quizState.answers.map((item) => item.questionSeconds));
+  const timing = computeTimingPercentiles(totalTimeUsed);
+  const topicBreakdown = topicBreakdownSnapshot();
+
+  quizState.finishedAtIso = new Date().toISOString();
+  quizState.lastResult = {
+    timedOut,
+    total,
+    correct,
+    scorePercent: score,
+    points,
+    maxPoints,
+    pointsPercent,
+    totalTimeSeconds: totalTimeUsed,
+    averageQuestionSeconds: avgTime,
+    fastestQuestionSeconds: fastest,
+    slowestQuestionSeconds: slowest,
+    scoringMode: getScoringMode(),
+    sectionLimitSeconds: quizState.sectionLimitSeconds,
+    adaptiveMode: isAdaptiveModeEnabled() ? "on" : "off",
+    timing,
+    topicBreakdown,
+  };
+  quizState.lastResult.shareUrl = buildShareUrl(quizState.lastResult);
+  quizState.integrity = computeAttemptIntegrity();
 
   const status = timedOut ? "Time expired." : "Quiz complete.";
   const summary = `${status} Score ${correct}/${total} (${score.toFixed(1)}%), points ${points.toFixed(2)}/${maxPoints.toFixed(2)} - ${scoreLabel(score)}`;
@@ -723,6 +879,8 @@ function finishQuiz(timedOut) {
       <li><strong>Average/question:</strong> ${avgTime.toFixed(1)}s</li>
       <li><strong>Fastest question:</strong> ${fastest.toFixed(1)}s</li>
       <li><strong>Slowest question:</strong> ${slowest.toFixed(1)}s</li>
+      <li><strong>Time percentile rank:</strong> ${timing.percentileRank.toFixed(1)}%</li>
+      <li><strong>P50/P90 time baseline:</strong> ${timing.p50ThresholdSeconds.toFixed(1)}s / ${timing.p90ThresholdSeconds.toFixed(1)}s</li>
       <li><strong>Questions answered:</strong> ${total}</li>
     </ul>
     <h4>By Topic</h4>
@@ -735,7 +893,8 @@ function finishQuiz(timedOut) {
       <thead><tr><th>Difficulty</th><th>Correct</th><th>Accuracy</th></tr></thead>
       <tbody>${difficultyRows || "<tr><td colspan='3'>No difficulty data.</td></tr>"}</tbody>
     </table>
-    <p><strong>Share:</strong> <a href="${quizState.lastResult ? quizState.lastResult.shareUrl : "#"}" target="_blank" rel="noopener">Open shareable result link</a></p>
+    <p><strong>Share:</strong> <a href="${quizState.lastResult.shareUrl}" target="_blank" rel="noopener">Open shareable result link</a></p>
+    <p><strong>Integrity:</strong> ${quizState.integrity.summaryDigest}</p>
   `;
 
   saveAttempt({
@@ -746,24 +905,9 @@ function finishQuiz(timedOut) {
     points,
     pointsPercent,
     totalTimeSeconds: totalTimeUsed,
+    integrityDigest: quizState.integrity.summaryDigest,
   });
 
-  quizState.lastResult = {
-    timedOut,
-    total,
-    correct,
-    scorePercent: score,
-    points,
-    maxPoints,
-    pointsPercent,
-    totalTimeSeconds: totalTimeUsed,
-    averageQuestionSeconds: avgTime,
-    fastestQuestionSeconds: fastest,
-    slowestQuestionSeconds: slowest,
-    scoringMode: getScoringMode(),
-  };
-  quizState.lastResult.shareUrl = buildShareUrl(quizState.lastResult);
-  results.querySelector("a").setAttribute("href", quizState.lastResult.shareUrl);
   renderProgress();
 
   document.getElementById("quiz-next").disabled = true;
@@ -805,6 +949,10 @@ function resetQuiz() {
   quizState.currentSectionTopic = "";
   quizState.sectionStartMs = 0;
   quizState.sectionRemainingSeconds = 0;
+  quizState.startedAtIso = "";
+  quizState.finishedAtIso = "";
+  quizState.attemptId = "";
+  quizState.integrity = null;
   quizState.questionStartMs = 0;
   document.getElementById("quiz-board").innerHTML = "<p>Configure the quiz and click Start.</p>";
   document.getElementById("quiz-feedback").textContent = "";
@@ -841,6 +989,10 @@ function startQuiz() {
   quizState.currentSectionTopic = "";
   quizState.sectionStartMs = 0;
   quizState.sectionRemainingSeconds = quizState.sectionLimitSeconds;
+  quizState.startedAtIso = new Date().toISOString();
+  quizState.finishedAtIso = "";
+  quizState.attemptId = generateAttemptId();
+  quizState.integrity = null;
   quizState.startTimeMs = Date.now();
   quizState.questionStartMs = Date.now();
 
@@ -900,7 +1052,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("quiz-export-json").addEventListener("click", exportResultsJson);
   document.getElementById("quiz-export-csv").addEventListener("click", exportResultsCsv);
   document.getElementById("quiz-copy-share").addEventListener("click", copyShareLink);
+  document.getElementById("quiz-submit-leaderboard").addEventListener("click", submitLeaderboard);
   document.getElementById("quiz-reset").addEventListener("click", resetQuiz);
+  document.getElementById("quiz-leaderboard-endpoint").addEventListener("input", updateActionButtons);
   initializeQuiz();
   renderSharedResultCard();
 });
