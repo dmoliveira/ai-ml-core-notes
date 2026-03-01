@@ -7,7 +7,7 @@
 
 .quiz-controls {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
   margin-bottom: 1rem;
 }
@@ -105,6 +105,21 @@
   margin-top: 1rem;
   border-top: 1px solid #cbd5e1;
   padding-top: 0.9rem;
+}
+
+.quiz-progress {
+  margin-top: 1rem;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 0.9rem;
+}
+
+.quiz-progress ul {
+  margin: 0.5rem 0;
+  padding-left: 1.1rem;
+}
+
+.quiz-progress .quiz-leaderboard {
+  margin-top: 0.6rem;
 }
 
 .quiz-results table {
