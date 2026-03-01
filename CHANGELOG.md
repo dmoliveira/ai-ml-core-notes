@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.5.0] - 2026-03-01
+
+- Added advanced web quiz scoring modes: standard, negative marking, and confidence-based points.
+- Added review-before-submit flow with question jumping, plus JSON/CSV export for completed quiz attempts.
+- Improved donation visibility across README, docs home, and quiz page with a direct Stripe support link.
+
 ## [0.4.0] - 2026-03-01
 
 - Added quiz difficulty balancing controls with configurable junior/mid/senior mix percentages.
