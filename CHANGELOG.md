@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.6.0] - 2026-03-01
+
+- Added adaptive next-question routing to adjust upcoming difficulty from live performance.
+- Added optional per-topic section timer with visible section countdown in the quiz UI.
+- Added signed shareable result links plus shared-result viewer and copy-link action.
+
 ## [0.5.0] - 2026-03-01
 
 - Added advanced web quiz scoring modes: standard, negative marking, and confidence-based points.
