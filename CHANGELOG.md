@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.4.0] - 2026-03-01
+
+- Added quiz difficulty balancing controls with configurable junior/mid/senior mix percentages.
+- Added richer timer analytics including per-question timing plus fastest/slowest question stats.
+- Added browser-saved progress tracking with attempts, best score, average score, and recent run history.
+
 ## [0.3.0] - 2026-03-01
 
 - Added a GitHub Pages interview quiz web UI with topic selection, question count control, randomization seed, and countdown timer.
