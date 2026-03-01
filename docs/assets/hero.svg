@@ -1,0 +1,20 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI ML Core Notes Hero Banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0b3b2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <circle cx="160" cy="90" r="140" fill="#22c55e" opacity="0.15"/>
+  <circle cx="1080" cy="320" r="180" fill="#06b6d4" opacity="0.15"/>
+  <text x="70" y="165" font-family="Verdana, Geneva, Tahoma, sans-serif" font-size="56" fill="#e2e8f0" font-weight="700">AI/ML Core Notes</text>
+  <text x="70" y="220" font-family="Verdana, Geneva, Tahoma, sans-serif" font-size="30" fill="#93c5fd">Learn Fast. Build Real AI. Ace Interviews.</text>
+  <rect x="70" y="258" width="460" height="12" rx="6" fill="url(#accent)"/>
+  <text x="70" y="318" font-family="Verdana, Geneva, Tahoma, sans-serif" font-size="24" fill="#cbd5e1">Foundations -> ML -> DL -> AI Engineering -> AI Agents</text>
+</svg>
