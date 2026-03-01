@@ -444,6 +444,44 @@ function selectedTopics() {
   return [...select.options].filter((option) => option.selected).map((option) => option.value);
 }
 
+function questionBankCandidates() {
+  const candidates = new Set();
+  candidates.add(QUESTIONS_PATH);
+  candidates.add("../assets/quiz-questions.json");
+  candidates.add("/assets/quiz-questions.json");
+
+  const path = window.location.pathname;
+  const marker = "/practice/";
+  if (path.includes(marker)) {
+    const prefix = path.slice(0, path.indexOf(marker));
+    candidates.add(`${prefix}/assets/quiz-questions.json`);
+  }
+
+  return [...candidates];
+}
+
+async function loadQuestionBank() {
+  const errors = [];
+  for (const candidate of questionBankCandidates()) {
+    try {
+      const response = await fetch(candidate);
+      if (!response.ok) {
+        errors.push(`${candidate} -> ${response.status}`);
+        continue;
+      }
+      const payload = await response.json();
+      if (!Array.isArray(payload)) {
+        errors.push(`${candidate} -> invalid JSON shape`);
+        continue;
+      }
+      return payload;
+    } catch (error) {
+      errors.push(`${candidate} -> ${String(error.message || error)}`);
+    }
+  }
+  throw new Error(`Unable to load question bank. Tried: ${errors.join(" | ")}`);
+}
+
 function updateSectionTimerDisplay() {
   const sectionEl = document.getElementById("quiz-section-timer");
   if (quizState.sectionLimitSeconds <= 0) {
@@ -1062,11 +1100,7 @@ function nextQuestion() {
 
 async function initializeQuiz() {
   try {
-    const response = await fetch(QUESTIONS_PATH);
-    if (!response.ok) {
-      throw new Error(`Unable to load question bank: ${response.status}`);
-    }
-    quizState.questions = await response.json();
+    quizState.questions = await loadQuestionBank();
 
     const topics = [...new Set(quizState.questions.map((item) => item.topic))].sort();
     const topicSelect = document.getElementById("quiz-topics");
