@@ -1,0 +1,40 @@
+name: Content Request
+description: Suggest a new topic, lab, or interview prep module
+title: "content: <topic name>"
+labels:
+  - content
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve AI/ML Core Notes.
+  - type: input
+    id: topic
+    attributes:
+      label: Topic name
+      placeholder: e.g., Model calibration for production
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Intended level
+      options:
+        - Beginner
+        - Intermediate
+        - Advanced
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this matters
+      description: Explain learner impact and interview relevance.
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: Suggested references
+      description: Include links to docs, papers, datasets, or examples.

@@ -37,12 +37,14 @@ It serves two core needs: practical learning for building real AI systems and in
 | Item | Owner | Status |
 | --- | --- | --- |
 | Repo bootstrap and license | Core maintainers | done |
-| Docs architecture and navigation | Core maintainers | doing |
+| Docs architecture and navigation | Core maintainers | done |
 | Foundations module | Core maintainers | doing |
 | ML/DL modules | Core maintainers | doing |
 | AI engineering and agents modules | Core maintainers | doing |
-| Interview prep and FAQ | Core maintainers | doing |
+| Interview prep and FAQ | Core maintainers | done |
 | Pages and Wiki automation | Core maintainers | doing |
+| Practice labs and starter code | Core maintainers | done |
+| Contribution templates | Core maintainers | done |
 
 Status values: `doing`, `done`.
 
