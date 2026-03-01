@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.8.0] - 2026-03-01
+
+- Fixed quiz page loading reliability by adding multi-path question bank resolution for different deployment base paths.
+- Added signed-result verification helper page and wired it into practice navigation.
+- Added anti-replay nonce/token metadata and idempotency key support for optional leaderboard submissions.
+- Improved mobile quiz actions layout and made Playwright smoke runner dependency-light.
+
 ## [0.7.0] - 2026-03-01
 
 - Simplified quiz UX with a minimalist default flow and collapsible advanced settings.
