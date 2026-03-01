@@ -2,6 +2,11 @@
 
 Use this browser-based simulator to practice interview rounds with timer pressure and immediate stats.
 
+- Pick topics and total question count.
+- Tune difficulty balancing by percentage (junior, mid, senior).
+- Get final score plus fastest/slowest question timing.
+- Track progress locally in your browser (attempt count, best score, recent runs).
+
 <link rel="stylesheet" href="../../assets/quiz-web.css">
 
 <div class="quiz-app">
@@ -20,6 +25,16 @@ Use this browser-based simulator to practice interview rounds with timer pressur
       <label for="quiz-seed">Random seed</label>
       <input id="quiz-seed" type="number" min="1" value="42">
     </div>
+    <div class="quiz-control">
+      <label for="quiz-weight-junior">Difficulty mix - junior (%)</label>
+      <input id="quiz-weight-junior" type="number" min="0" max="100" value="30">
+
+      <label for="quiz-weight-mid">Difficulty mix - mid (%)</label>
+      <input id="quiz-weight-mid" type="number" min="0" max="100" value="50">
+
+      <label for="quiz-weight-senior">Difficulty mix - senior (%)</label>
+      <input id="quiz-weight-senior" type="number" min="0" max="100" value="20">
+    </div>
   </div>
 
   <div class="quiz-actions">
@@ -34,6 +49,12 @@ Use this browser-based simulator to practice interview rounds with timer pressur
   </div>
   <div class="quiz-feedback" id="quiz-feedback"></div>
   <div class="quiz-results" id="quiz-results"></div>
+
+  <div class="quiz-progress" id="quiz-progress">
+    <h3>Saved Progress</h3>
+    <p>Your attempts and best score are stored in your browser.</p>
+    <div id="quiz-progress-content"></div>
+  </div>
 </div>
 
 <script src="../../assets/quiz-web.js"></script>
