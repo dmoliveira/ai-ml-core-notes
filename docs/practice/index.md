@@ -21,6 +21,10 @@ Hands-on labs help convert theory into engineering skill.
 - Julia: `examples/julia/lab01_baseline.jl`
 - R: `examples/r/lab01_baseline.R`
 
+## Interview quiz mode
+
+- [Interview Quiz Simulator](interview-quiz.md): timed quizzes with random picks, topic filtering, and score stats
+
 ## Recommended datasets and platforms
 
 - Kaggle datasets and competitions: https://www.kaggle.com/

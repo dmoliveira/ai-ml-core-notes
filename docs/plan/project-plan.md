@@ -45,6 +45,7 @@ It serves two core needs: practical learning for building real AI systems and in
 | Pages and Wiki automation | Core maintainers | doing |
 | Practice labs and starter code | Core maintainers | done |
 | Contribution templates | Core maintainers | done |
+| Timed interview quiz simulator | Core maintainers | done |
 
 Status values: `doing`, `done`.
 
