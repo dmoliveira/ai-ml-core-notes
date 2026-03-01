@@ -1,68 +1,71 @@
-# AI/ML Core Notes: Fast Track to AI Engineering
+# AI/ML Core Notes 🧠⚡
 
-![Hero Banner](docs/assets/hero.svg)
+![AI/ML Core Notes Hero](docs/assets/hero.svg)
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://dmoliveira.github.io/ai-ml-core-notes/)
+[![Docs Quality Checks](https://github.com/dmoliveira/ai-ml-core-notes/actions/workflows/ci.yml/badge.svg)](https://github.com/dmoliveira/ai-ml-core-notes/actions/workflows/ci.yml)
+[![Docs Site Deploy](https://github.com/dmoliveira/ai-ml-core-notes/actions/workflows/pages.yml/badge.svg)](https://github.com/dmoliveira/ai-ml-core-notes/actions/workflows/pages.yml)
+[![Docs Site](https://img.shields.io/badge/docs-live_site-0a7ea4)](https://dmoliveira.github.io/ai-ml-core-notes/)
 [![Wiki](https://img.shields.io/badge/wiki-enabled-informational)](https://github.com/dmoliveira/ai-ml-core-notes/wiki)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/dmoliveira/ai-ml-core-notes)](https://github.com/dmoliveira/ai-ml-core-notes/commits/main)
+[![Open Issues](https://img.shields.io/github/issues/dmoliveira/ai-ml-core-notes)](https://github.com/dmoliveira/ai-ml-core-notes/issues)
+[![Stars](https://img.shields.io/github/stars/dmoliveira/ai-ml-core-notes?style=social)](https://github.com/dmoliveira/ai-ml-core-notes/stargazers)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Made for Learners](https://img.shields.io/badge/goal-fast%20AI%20learning-orange)](docs/plan/project-plan.md)
-[![Support](https://img.shields.io/badge/support-Stripe-1d4ed8)](https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00)
+[![Support via Stripe](https://img.shields.io/badge/support-stripe-635bff?logo=stripe&logoColor=white)](https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00)
 
-> Learn AI in the most practical way, build production-minded AI agents, and prepare for interviews from beginner to advanced.
+Learn AI fast, build real AI systems, and prepare for interviews with practical depth.
 
-## Why this repo exists
+## New Here? 15-Minute Quick Start ⏱️
 
-This repository is built for learners who want a clear path from AI fundamentals to AI engineering execution.
-You get both short summaries and deep dives, with examples in Python, Julia, and R.
+If you only have 15 minutes, do this:
 
-## What you get
+1. Open `docs/plan/project-plan.md` and scan goals + roadmap.
+2. Read `docs/foundations/index.md` for core concepts.
+3. Open `docs/interview-prep/question-bank.md` and answer 3 questions.
+4. Run one quiz in `docs/practice/quiz-web.md`.
 
-- 🚀 Structured roadmap from foundations to AI agent systems
-- 🧠 Interview prep content (concepts, scenario questions, trade-offs)
-- 🛠️ Practical examples and implementation notes by language and ecosystem
-- 📚 Curated references (Kaggle, papers, docs, open datasets, tools)
-- 🌐 Full documentation published on GitHub Pages
-- 🧭 Wiki support for quick references and evolving notes
+By the end, you will have a concrete learning path and a baseline score.
 
-## Learning paths
+## Start Here 🚀
 
-- [Foundations](docs/foundations/index.md): math, statistics, probability, optimization
-- [Machine Learning](docs/machine-learning/index.md): supervised, unsupervised, evaluation, tuning
-- [Deep Learning](docs/deep-learning/index.md): neural networks, transformers, training loops
-- [AI Engineering](docs/ai-engineering/index.md): system design, reliability, deployment, observability
-- [AI Agents](docs/ai-agents/index.md): tool use, memory, planning, evaluation
-- [Interview Prep](docs/interview-prep/index.md): checklists, prompts, and role-level expectations
+1. Foundations: `docs/foundations/index.md`
+2. Machine Learning: `docs/machine-learning/index.md`
+3. Deep Learning: `docs/deep-learning/index.md`
+4. AI Engineering: `docs/ai-engineering/index.md`
+5. AI Agents: `docs/ai-agents/index.md`
+6. Interview Prep: `docs/interview-prep/index.md`
+7. Practice Labs: `docs/practice/index.md`
 
-## How to read this repo
+## Choose by Goal 🎯
 
-- Start with [project plan and roadmap](docs/plan/project-plan.md)
-- Use [quick summaries](docs/summaries/index.md) for fast refresh
-- Use [deep dives](docs/deep-dives/index.md) for detailed learning
-- Jump to [FAQ](docs/faq.md) when you are blocked
+- Fast refresher: `docs/summaries/index.md`
+- Deep technical understanding: `docs/deep-dives/index.md`
+- Interview readiness: `docs/interview-prep/question-bank.md`
+- Hands-on practice: `docs/practice/quiz-web.md`
+- FAQ and blockers: `docs/faq.md`
+- Project roadmap and execution: `docs/plan/project-plan.md`
 
-## Tech stack
+## What You Get 📚
 
-- Markdown-first content strategy
-- MkDocs + Material theme for docs UX
-- GitHub Actions for CI, Pages deploy, and Wiki sync
+- Structured learning path from foundations to agents
+- Interview tracks (junior, mid, senior)
+- Practical labs and multilingual starter examples
+- Quiz simulator with scoring modes and review flow
+- Curated references (Kaggle, docs, datasets, packages)
 
-## Support this project
+## Support This Project 💛
 
-If this helped you get your first AI role, level up, or pass an interview, consider supporting:
+If this content helps your AI journey, you can support maintenance and new educational material:
 
-- 💖 GitHub Sponsors: `https://github.com/sponsors/dmoliveira`
-- ☕ Buy Me a Coffee: `https://buymeacoffee.com/dmoliveira`
-- 🎯 Stripe Support: `https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00`
-- 🌟 Star and share this repo with someone learning AI
+- Stripe: [Support AI/ML Core Notes](https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00)
+- GitHub Sponsors: `https://github.com/sponsors/dmoliveira`
+- Buy Me a Coffee: `https://buymeacoffee.com/dmoliveira`
 
-Project sponsorship links are configured in `.github/FUNDING.yml`.
-
-## Contribution model
+## Contribution Model 🤝
 
 - Start from `docs/plan/project-plan.md`
-- Pick a task from the epics and open a focused PR
-- Keep examples practical, concise, and interview-relevant
+- Pick one focused task and open a small PR
+- Keep explanations didactic, practical, and learner-first
 
 ## License
 
