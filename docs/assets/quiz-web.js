@@ -59,6 +59,35 @@ function scoreLabel(score) {
   return "Needs practice";
 }
 
+function getScoringMode() {
+  return document.getElementById("quiz-scoring-mode").value;
+}
+
+function scoreAnswer(correct, scoringMode, confidence) {
+  if (scoringMode === "negative") {
+    return {
+      points: correct ? 1 : -0.25,
+      maxPoints: 1,
+    };
+  }
+  if (scoringMode === "confidence") {
+    const confidenceWeights = {
+      low: { correct: 1, incorrect: 0 },
+      medium: { correct: 2, incorrect: -1 },
+      high: { correct: 3, incorrect: -2 },
+    };
+    const profile = confidenceWeights[confidence] || confidenceWeights.medium;
+    return {
+      points: correct ? profile.correct : profile.incorrect,
+      maxPoints: 3,
+    };
+  }
+  return {
+    points: correct ? 1 : 0,
+    maxPoints: 1,
+  };
+}
+
 function getDifficultyWeights() {
   const junior = Number(document.getElementById("quiz-weight-junior").value) || 0;
   const mid = Number(document.getElementById("quiz-weight-mid").value) || 0;
@@ -170,19 +199,31 @@ function renderQuestion() {
     })
     .join("");
 
+  const confidenceHtml = `
+    <div class="quiz-meta">
+      <label for="quiz-confidence"><strong>Confidence:</strong></label>
+      <select id="quiz-confidence" ${disabled}>
+        <option value="low" ${answered && answered.confidence === "low" ? "selected" : ""}>Low</option>
+        <option value="medium" ${!answered || answered.confidence === "medium" ? "selected" : ""}>Medium</option>
+        <option value="high" ${answered && answered.confidence === "high" ? "selected" : ""}>High</option>
+      </select>
+    </div>
+  `;
+
   board.innerHTML = `
     <div class="quiz-meta">
       <span>Question ${quizState.currentIndex + 1}/${quizState.selectedQuestions.length}</span>
       <span>Topic: ${question.topic}</span>
       <span>Difficulty: ${question.difficulty}</span>
     </div>
+    ${confidenceHtml}
     <div class="quiz-prompt">${question.prompt}</div>
     <div class="quiz-options">${optionsHtml}</div>
   `;
 
   if (answered) {
     const text = answered.correct
-      ? `Correct. Time for question: ${answered.questionSeconds.toFixed(1)}s.`
+      ? `Correct. Time for question: ${answered.questionSeconds.toFixed(1)}s. Points: ${answered.points.toFixed(2)}.`
       : `Incorrect. Correct answer: ${String.fromCharCode(65 + question.answer_index)}. ${question.explanation}`;
     feedback.textContent = text;
   }
@@ -206,6 +247,10 @@ function collectAnswer() {
 
   const selectedIndex = Number(selected.value);
   const correct = selectedIndex === question.answer_index;
+  const confidenceSelect = document.getElementById("quiz-confidence");
+  const confidence = confidenceSelect ? confidenceSelect.value : "medium";
+  const scoringMode = getScoringMode();
+  const scoring = scoreAnswer(correct, scoringMode, confidence);
   const elapsedSinceStart = Math.max(0, (Date.now() - quizState.startTimeMs) / 1000);
   const questionSeconds = Math.max(0, (Date.now() - quizState.questionStartMs) / 1000);
 
@@ -214,7 +259,10 @@ function collectAnswer() {
     topic: question.topic,
     difficulty: question.difficulty,
     selected: selectedIndex,
+    confidence,
     correct,
+    points: scoring.points,
+    maxPoints: scoring.maxPoints,
     elapsedSeconds: elapsedSinceStart,
     questionSeconds,
   });
@@ -312,13 +360,16 @@ function finishQuiz(timedOut) {
   const total = quizState.answers.length;
   const correct = quizState.answers.filter((item) => item.correct).length;
   const score = total === 0 ? 0 : (correct / total) * 100;
+  const points = quizState.answers.reduce((sum, item) => sum + item.points, 0);
+  const maxPoints = quizState.answers.reduce((sum, item) => sum + item.maxPoints, 0);
+  const pointsPercent = maxPoints === 0 ? 0 : (Math.max(0, points) / maxPoints) * 100;
   const totalTimeUsed = (Date.now() - quizState.startTimeMs) / 1000;
   const avgTime = total === 0 ? 0 : totalTimeUsed / total;
   const fastest = total === 0 ? 0 : Math.min(...quizState.answers.map((item) => item.questionSeconds));
   const slowest = total === 0 ? 0 : Math.max(...quizState.answers.map((item) => item.questionSeconds));
 
   const status = timedOut ? "Time expired." : "Quiz complete.";
-  const summary = `${status} Score ${correct}/${total} (${score.toFixed(1)}%) - ${scoreLabel(score)}`;
+  const summary = `${status} Score ${correct}/${total} (${score.toFixed(1)}%), points ${points.toFixed(2)}/${maxPoints.toFixed(2)} - ${scoreLabel(score)}`;
   document.getElementById("quiz-feedback").textContent = summary;
 
   const topicRows = topicStats()
@@ -340,6 +391,7 @@ function finishQuiz(timedOut) {
     <h3>Final Stats</h3>
     <ul>
       <li><strong>Score:</strong> ${correct}/${total} (${score.toFixed(1)}%)</li>
+      <li><strong>Points:</strong> ${points.toFixed(2)}/${maxPoints.toFixed(2)} (${pointsPercent.toFixed(1)}%)</li>
       <li><strong>Total time:</strong> ${totalTimeUsed.toFixed(1)}s</li>
       <li><strong>Average/question:</strong> ${avgTime.toFixed(1)}s</li>
       <li><strong>Fastest question:</strong> ${fastest.toFixed(1)}s</li>
@@ -363,6 +415,8 @@ function finishQuiz(timedOut) {
     total,
     correct,
     scorePercent: score,
+    points,
+    pointsPercent,
     totalTimeSeconds: totalTimeUsed,
   });
   renderProgress();

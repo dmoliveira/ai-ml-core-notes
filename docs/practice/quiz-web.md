@@ -4,6 +4,7 @@ Use this browser-based simulator to practice interview rounds with timer pressur
 
 - Pick topics and total question count.
 - Tune difficulty balancing by percentage (junior, mid, senior).
+- Choose scoring mode (standard, negative marking, confidence-based).
 - Get final score plus fastest/slowest question timing.
 - Track progress locally in your browser (attempt count, best score, recent runs).
 
@@ -34,6 +35,13 @@ Use this browser-based simulator to practice interview rounds with timer pressur
 
       <label for="quiz-weight-senior">Difficulty mix - senior (%)</label>
       <input id="quiz-weight-senior" type="number" min="0" max="100" value="20">
+
+      <label for="quiz-scoring-mode">Scoring mode</label>
+      <select id="quiz-scoring-mode">
+        <option value="standard">Standard</option>
+        <option value="negative">Negative Marking</option>
+        <option value="confidence">Confidence Based</option>
+      </select>
     </div>
   </div>
 
