@@ -1,0 +1,37 @@
+site_name: AI/ML Core Notes
+site_description: Fast-track AI learning and AI engineering interview preparation
+site_url: https://USERNAME.github.io/REPO/
+repo_url: https://github.com/USERNAME/REPO
+repo_name: USERNAME/REPO
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Roadmap: plan/project-plan.md
+  - Foundations: foundations/index.md
+  - Machine Learning: machine-learning/index.md
+  - Deep Learning: deep-learning/index.md
+  - AI Engineering: ai-engineering/index.md
+  - AI Agents: ai-agents/index.md
+  - Interview Prep: interview-prep/index.md
+  - Summaries: summaries/index.md
+  - Deep Dives: deep-dives/index.md
+  - FAQ: faq.md
