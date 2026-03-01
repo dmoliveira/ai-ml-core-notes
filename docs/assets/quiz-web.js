@@ -18,6 +18,8 @@ const quizState = {
   finishedAtIso: "",
   attemptId: "",
   integrity: null,
+  replayNonce: "",
+  leaderboardSubmitted: false,
 };
 
 const QUESTIONS_PATH = "../../assets/quiz-questions.json";
@@ -67,7 +69,7 @@ function updateActionButtons() {
     exportJsonButton.disabled = false;
     exportCsvButton.disabled = false;
     copyShareButton.disabled = !quizState.lastResult || !quizState.lastResult.shareUrl;
-    leaderboardButton.disabled = !endpointValue;
+    leaderboardButton.disabled = !endpointValue || quizState.leaderboardSubmitted;
     return;
   }
 
@@ -264,6 +266,17 @@ function generateAttemptId() {
   return computeShareSignature(seed).slice(0, 12);
 }
 
+function generateReplayNonce() {
+  if (window.crypto && window.crypto.getRandomValues) {
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    return Array.from(bytes)
+      .map((value) => value.toString(16).padStart(2, "0"))
+      .join("");
+  }
+  return `${Date.now()}-${Math.random().toString(16).slice(2, 10)}`;
+}
+
 function computeAttemptIntegrity() {
   const questionOrder = quizState.selectedQuestions.map((item) => item.id);
   const answerDigestBase = quizState.answers
@@ -274,12 +287,18 @@ function computeAttemptIntegrity() {
   const summaryDigest = computeShareSignature(
     `${quizState.attemptId}|${quizState.startedAtIso}|${quizState.finishedAtIso}|${orderDigest}|${answerDigest}`,
   );
+  const replayProtection = {
+    nonce: quizState.replayNonce,
+    token: computeShareSignature(`${quizState.attemptId}|${quizState.replayNonce}|${summaryDigest}`),
+    issuedAt: quizState.startedAtIso,
+  };
 
   return {
     attemptId: quizState.attemptId,
     orderDigest,
     answerDigest,
     summaryDigest,
+    replayProtection,
     client: {
       userAgent: navigator.userAgent,
       language: navigator.language,
@@ -299,11 +318,16 @@ async function submitLeaderboard() {
     feedback.textContent = "Set leaderboard endpoint in Advanced settings first.";
     return;
   }
+  if (quizState.leaderboardSubmitted) {
+    feedback.textContent = "This attempt was already submitted to the leaderboard.";
+    return;
+  }
 
   const payload = {
     displayName: String(document.getElementById("quiz-display-name").value || "Learner").trim() || "Learner",
     summary: quizState.lastResult,
     integrity: quizState.integrity,
+    antiReplay: quizState.integrity ? quizState.integrity.replayProtection : null,
     submittedAt: new Date().toISOString(),
   };
 
@@ -312,12 +336,15 @@ async function submitLeaderboard() {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        "x-idempotency-key": `${quizState.attemptId}-${quizState.replayNonce}`,
       },
       body: JSON.stringify(payload),
     });
     if (!response.ok) {
       throw new Error(`Leaderboard submission failed (${response.status})`);
     }
+    quizState.leaderboardSubmitted = true;
+    updateActionButtons();
     feedback.textContent = "Leaderboard submitted successfully.";
   } catch (error) {
     feedback.textContent = String(error.message || error);
@@ -415,6 +442,44 @@ function exportResultsCsv() {
 function selectedTopics() {
   const select = document.getElementById("quiz-topics");
   return [...select.options].filter((option) => option.selected).map((option) => option.value);
+}
+
+function questionBankCandidates() {
+  const candidates = new Set();
+  candidates.add(QUESTIONS_PATH);
+  candidates.add("../assets/quiz-questions.json");
+  candidates.add("/assets/quiz-questions.json");
+
+  const path = window.location.pathname;
+  const marker = "/practice/";
+  if (path.includes(marker)) {
+    const prefix = path.slice(0, path.indexOf(marker));
+    candidates.add(`${prefix}/assets/quiz-questions.json`);
+  }
+
+  return [...candidates];
+}
+
+async function loadQuestionBank() {
+  const errors = [];
+  for (const candidate of questionBankCandidates()) {
+    try {
+      const response = await fetch(candidate);
+      if (!response.ok) {
+        errors.push(`${candidate} -> ${response.status}`);
+        continue;
+      }
+      const payload = await response.json();
+      if (!Array.isArray(payload)) {
+        errors.push(`${candidate} -> invalid JSON shape`);
+        continue;
+      }
+      return payload;
+    } catch (error) {
+      errors.push(`${candidate} -> ${String(error.message || error)}`);
+    }
+  }
+  throw new Error(`Unable to load question bank. Tried: ${errors.join(" | ")}`);
 }
 
 function updateSectionTimerDisplay() {
@@ -953,9 +1018,12 @@ function resetQuiz() {
   quizState.finishedAtIso = "";
   quizState.attemptId = "";
   quizState.integrity = null;
+  quizState.replayNonce = "";
+  quizState.leaderboardSubmitted = false;
   quizState.questionStartMs = 0;
   document.getElementById("quiz-board").innerHTML = "<p>Configure the quiz and click Start.</p>";
   document.getElementById("quiz-feedback").textContent = "";
+  document.getElementById("quiz-leaderboard-feedback").textContent = "";
   document.getElementById("quiz-results").innerHTML = "";
   document.getElementById("quiz-timer").textContent = "00:00";
   updateSectionTimerDisplay();
@@ -993,10 +1061,13 @@ function startQuiz() {
   quizState.finishedAtIso = "";
   quizState.attemptId = generateAttemptId();
   quizState.integrity = null;
+  quizState.replayNonce = generateReplayNonce();
+  quizState.leaderboardSubmitted = false;
   quizState.startTimeMs = Date.now();
   quizState.questionStartMs = Date.now();
 
   document.getElementById("quiz-results").innerHTML = "";
+  document.getElementById("quiz-leaderboard-feedback").textContent = "";
   document.getElementById("quiz-next").disabled = false;
   document.getElementById("quiz-finalize").disabled = true;
   updateSectionTimerDisplay();
@@ -1029,11 +1100,7 @@ function nextQuestion() {
 
 async function initializeQuiz() {
   try {
-    const response = await fetch(QUESTIONS_PATH);
-    if (!response.ok) {
-      throw new Error(`Unable to load question bank: ${response.status}`);
-    }
-    quizState.questions = await response.json();
+    quizState.questions = await loadQuestionBank();
 
     const topics = [...new Set(quizState.questions.map((item) => item.topic))].sort();
     const topicSelect = document.getElementById("quiz-topics");

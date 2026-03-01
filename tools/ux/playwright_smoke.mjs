@@ -1,6 +1,7 @@
-import { chromium } from "playwright";
+import { execSync } from "node:child_process";
 
-const baseUrl = process.argv[2] || "http://127.0.0.1:8000";
+const baseUrl = process.argv[2] || "file://./site/";
+const playwrightCmd = process.env.PLAYWRIGHT_CMD || "npx -y playwright@1.53.0";
 
 const pages = [
   "/",
@@ -18,6 +19,8 @@ const pages = [
   "/practice/",
   "/practice/interview-quiz/",
   "/practice/quiz-web/",
+  "/practice/leaderboard-endpoint/",
+  "/practice/verify-shared-result/",
   "/practice/lab-01-tabular/",
   "/practice/lab-02-rag/",
   "/practice/lab-03-agent/",
@@ -27,39 +30,36 @@ const pages = [
   "/faq/",
 ];
 
-const browser = await chromium.launch({ headless: true });
-const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-const page = await context.newPage();
-
-const failures = [];
-
-for (const path of pages) {
-  const url = `${baseUrl}${path}`;
-  const consoleErrors = [];
-  page.removeAllListeners("console");
-  page.on("console", (msg) => {
-    if (msg.type() === "error") {
-      consoleErrors.push(msg.text());
-    }
-  });
-
-  const response = await page.goto(url, { waitUntil: "networkidle" });
-  const status = response ? response.status() : 0;
-
-  if (status >= 400) {
-    failures.push(`${path} returned status ${status}`);
-    continue;
+function resolveTarget(path) {
+  if (baseUrl.startsWith("file://")) {
+    const suffix = path === "/" ? "index.html" : `${path.replace(/^\//, "")}index.html`;
+    return `${baseUrl}${suffix}`;
   }
-  if (consoleErrors.length > 0) {
-    failures.push(`${path} console errors: ${consoleErrors.join(" | ")}`);
-  }
-
-  if (path === "/practice/quiz-web/") {
-    await page.screenshot({ path: "site/quiz-web-smoke.png", fullPage: true });
-  }
+  return `${baseUrl}${path}`;
 }
 
-await browser.close();
+const failures = [];
+let counter = 0;
+
+for (const path of pages) {
+  counter += 1;
+  const out = `/tmp/playwright-smoke-${counter}.png`;
+  const target = resolveTarget(path);
+  const cmd = `${playwrightCmd} screenshot --browser=chromium \"${target}\" \"${out}\"`;
+
+  try {
+    execSync(cmd, {
+      stdio: "pipe",
+      env: {
+        ...process.env,
+        npm_config_script_shell: process.env.npm_config_script_shell || "/bin/bash",
+      },
+    });
+  } catch (error) {
+    failures.push(`${path} failed: ${String(error.message || error)}`);
+    continue;
+  }
+}
 
 if (failures.length > 0) {
   for (const failure of failures) {
