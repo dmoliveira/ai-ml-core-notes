@@ -1,0 +1,26 @@
+name: Bug Report
+description: Report docs, automation, or content issues
+title: "bug: <short description>"
+labels:
+  - bug
+  - needs-triage
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Affected page or file
+      placeholder: docs/interview-prep/index.md
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is wrong
+      description: Explain expected behavior vs actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide steps to reproduce the issue.

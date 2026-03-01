@@ -32,6 +32,15 @@ nav:
   - AI Engineering: ai-engineering/index.md
   - AI Agents: ai-agents/index.md
   - Interview Prep: interview-prep/index.md
+  - Junior Track: interview-prep/junior.md
+  - Mid Track: interview-prep/mid.md
+  - Senior Track: interview-prep/senior.md
+  - Question Bank: interview-prep/question-bank.md
+  - Practice Labs: practice/index.md
+  - Interview Quiz: practice/interview-quiz.md
+  - Lab 01: practice/lab-01-tabular.md
+  - Lab 02: practice/lab-02-rag.md
+  - Lab 03: practice/lab-03-agent.md
   - Summaries: summaries/index.md
   - Deep Dives: deep-dives/index.md
   - Wiki Source: wiki/Home.md

@@ -14,6 +14,13 @@ Prepare for AI and AI engineering interviews with layered study depth.
 - Scenario drills (design + trade-offs)
 - Hands-on tasks (implement + explain)
 
+## Structured tracks
+
+- [Junior track](junior.md): core ML literacy, metrics, and model debugging basics
+- [Mid-level track](mid.md): system trade-offs, experimentation, and delivery quality
+- [Senior track](senior.md): architecture, reliability, and organization-level decisions
+- [Question bank](question-bank.md): concept, scenario, and coding prompts by level
+
 ## External references
 
 - Kaggle interview discussions: https://www.kaggle.com/discussions

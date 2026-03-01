@@ -11,6 +11,7 @@ Welcome to a practical AI learning system that helps you move from fundamentals 
 5. Build systems in [AI Engineering](ai-engineering/index.md)
 6. Build workflows in [AI Agents](ai-agents/index.md)
 7. Prepare with [Interview Prep](interview-prep/index.md)
+8. Drill with [Practice Labs](practice/index.md)
 
 ## Key outcomes
 
@@ -18,3 +19,4 @@ Welcome to a practical AI learning system that helps you move from fundamentals 
 - Build AI prototypes and evaluate them correctly
 - Design robust AI agent systems with tooling and memory
 - Communicate trade-offs in interviews and real projects
+- Build confidence through repeatable lab exercises and retrospectives
