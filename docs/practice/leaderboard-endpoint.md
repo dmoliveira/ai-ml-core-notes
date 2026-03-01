@@ -21,7 +21,17 @@ If you want shared rankings across learners, you can provide a custom endpoint i
   },
   "integrity": {
     "attemptId": "abc123",
-    "summaryDigest": "xyz987"
+    "summaryDigest": "xyz987",
+    "replayProtection": {
+      "nonce": "f3d7...",
+      "token": "9k2...",
+      "issuedAt": "2026-03-01T11:58:00.000Z"
+    }
+  },
+  "antiReplay": {
+    "nonce": "f3d7...",
+    "token": "9k2...",
+    "issuedAt": "2026-03-01T11:58:00.000Z"
   },
   "submittedAt": "2026-03-01T12:00:00.000Z"
 }
@@ -40,12 +50,19 @@ export default {
       return new Response("invalid payload", { status: 400 });
     }
 
+    const nonceKey = `nonce:${payload.antiReplay?.nonce || ""}`;
+    const existingNonce = await env.LEADERBOARD.get(nonceKey);
+    if (existingNonce) {
+      return new Response("duplicate submission", { status: 409 });
+    }
+
     const entry = {
       displayName: String(payload.displayName).slice(0, 40),
       scorePercent: Number(payload.summary.scorePercent) || 0,
       pointsPercent: Number(payload.summary.pointsPercent) || 0,
       totalTimeSeconds: Number(payload.summary.totalTimeSeconds) || 0,
       attemptId: payload.integrity.attemptId,
+      summaryDigest: payload.integrity.summaryDigest,
       submittedAt: payload.submittedAt,
     };
 
@@ -53,6 +70,7 @@ export default {
     existing.push(entry);
     existing.sort((a, b) => b.scorePercent - a.scorePercent || a.totalTimeSeconds - b.totalTimeSeconds);
     await env.LEADERBOARD.put("scores", JSON.stringify(existing.slice(0, 100)));
+    await env.LEADERBOARD.put(nonceKey, "used", { expirationTtl: 86400 });
 
     return Response.json({ ok: true, stored: true });
   },
@@ -60,3 +78,9 @@ export default {
 ```
 
 Use any provider you prefer (Cloudflare Workers, Vercel Functions, Netlify Functions, AWS Lambda).
+
+## Anti-replay recommendation
+
+- Reject repeated `nonce` values for a TTL window (for example 24h).
+- Validate `x-idempotency-key` header and bind it to the same nonce and attempt id.
+- Store `summaryDigest` and reject duplicate digest submissions from the same learner/profile.
