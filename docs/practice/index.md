@@ -4,9 +4,9 @@ Hands-on labs help convert theory into engineering skill.
 
 ## Lab set
 
-- Lab 1: tabular baseline and feature engineering (Python/R)
-- Lab 2: text classification and embedding retrieval (Python/Julia)
-- Lab 3: agent workflow with tools and memory evaluation
+- [Lab 1](lab-01-tabular.md): tabular baseline and feature engineering (Python/R/Julia)
+- [Lab 2](lab-02-rag.md): retrieval-augmented QA and evaluation
+- [Lab 3](lab-03-agent.md): agent workflow with tools and memory evaluation
 
 ## Output expectations
 
@@ -14,6 +14,12 @@ Hands-on labs help convert theory into engineering skill.
 - Short experiment log
 - Metric table with baseline vs improved run
 - Lessons learned and next iteration plan
+
+## Starter code
+
+- Python: `examples/python/lab01_baseline.py`
+- Julia: `examples/julia/lab01_baseline.jl`
+- R: `examples/r/lab01_baseline.R`
 
 ## Recommended datasets and platforms
 
