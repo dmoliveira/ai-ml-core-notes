@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.13.0] - 2026-03-02
+
+- Added `--base-url` support to live smoke checks so CI and local runs can target production or preview deployments.
+- Extended live smoke JSON/markdown artifacts with source `baseUrl` metadata for clearer dashboard/report traceability.
+- Updated live-check dashboard docs and seeded snapshot data to display and preserve base URL context.
+
 ## [0.12.0] - 2026-03-02
 
 - Added live-check dashboard drill-down controls with row filtering (`all`, `errors`, `ok`) and optional auto-refresh.
