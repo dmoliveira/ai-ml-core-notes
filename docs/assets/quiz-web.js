@@ -694,7 +694,7 @@ function renderQuestion() {
   }
 
   const nextButton = document.getElementById("quiz-next");
-  nextButton.disabled = !answered;
+  nextButton.disabled = false;
   updateActionButtons();
 }
 
