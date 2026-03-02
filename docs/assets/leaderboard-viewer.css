@@ -43,6 +43,11 @@
   color: #fff;
 }
 
+#lb-export-csv {
+  background: #065f46;
+  color: #fff;
+}
+
 #lb-prev,
 #lb-next {
   background: #475569;
