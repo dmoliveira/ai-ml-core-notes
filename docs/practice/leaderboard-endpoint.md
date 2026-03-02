@@ -79,6 +79,38 @@ export default {
 
 Use any provider you prefer (Cloudflare Workers, Vercel Functions, Netlify Functions, AWS Lambda).
 
+## Recommended GET response for public viewer
+
+Expose a read-only `GET` endpoint that returns either:
+
+```json
+[
+  {
+    "displayName": "Learner",
+    "scorePercent": 82.5,
+    "totalTimeSeconds": 108.7,
+    "submittedAt": "2026-03-01T12:00:00.000Z"
+  }
+]
+```
+
+or:
+
+```json
+{
+  "scores": [
+    {
+      "displayName": "Learner",
+      "scorePercent": 82.5,
+      "totalTimeSeconds": 108.7,
+      "submittedAt": "2026-03-01T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+This format is compatible with `docs/practice/leaderboard-viewer.md`.
+
 ## Anti-replay recommendation
 
 - Reject repeated `nonce` values for a TTL window (for example 24h).
