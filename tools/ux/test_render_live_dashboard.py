@@ -11,6 +11,11 @@ import render_live_dashboard
 def test_render_markdown_with_rows() -> None:
     payload = {
         "generatedAt": "2026-03-02T00:00:00Z",
+        "okCount": 1,
+        "errorCount": 0,
+        "strict": False,
+        "retries": 2,
+        "delaySeconds": 5.0,
         "checks": [
             {
                 "url": "https://example.test/",
@@ -24,6 +29,9 @@ def test_render_markdown_with_rows() -> None:
     markdown = render_live_dashboard.render_markdown(payload)
     assert "# Live Pages Check Dashboard" in markdown
     assert "Generated at: `2026-03-02T00:00:00Z`" in markdown
+    assert (
+        "Summary: ok=1, error=0, strict=False, retries=2, delaySeconds=5.0" in markdown
+    )
     assert "| https://example.test/ | ok | 0.456 | 2026-03-02T00:00:01Z |" in markdown
 
 

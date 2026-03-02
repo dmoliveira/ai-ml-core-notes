@@ -28,6 +28,22 @@ def test_parse_json_out_path_requires_value() -> None:
         live_pages_check.parse_json_out_path(["script.py", "--json-out"])
 
 
+def test_parse_int_flag_rejects_zero() -> None:
+    with pytest.raises(RuntimeError, match="--retries must be >= 1"):
+        live_pages_check.parse_int_flag(
+            ["script.py", "--retries", "0"], "--retries", 12
+        )
+
+
+def test_parse_float_flag_rejects_negative() -> None:
+    with pytest.raises(RuntimeError, match="--delay-seconds must be >= 0"):
+        live_pages_check.parse_float_flag(
+            ["script.py", "--delay-seconds", "-1"],
+            "--delay-seconds",
+            10.0,
+        )
+
+
 def test_main_writes_json_payload(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
@@ -57,6 +73,11 @@ def test_main_writes_json_payload(
 
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     assert payload["count"] == 2
+    assert payload["okCount"] == 2
+    assert payload["errorCount"] == 0
+    assert payload["strict"] is False
+    assert payload["retries"] == 1
+    assert payload["delaySeconds"] == 0.0
     assert len(payload["checks"]) == 2
     assert all(row["status"] == "ok" for row in payload["checks"])
 
@@ -80,7 +101,10 @@ def test_main_non_strict_failure_returns_zero(
 
     assert live_pages_check.main() == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
+    assert payload["okCount"] == 0
+    assert payload["errorCount"] == 1
     assert payload["checks"][0]["status"] == "error"
+    assert payload["checks"][0]["errorType"] == "RuntimeError"
 
 
 def test_main_strict_failure_returns_one(monkeypatch: pytest.MonkeyPatch) -> None:
