@@ -38,8 +38,25 @@
   cursor: pointer;
 }
 
+.lb-actions select {
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  padding: 0.45rem;
+  background: #fff;
+}
+
 #lb-load {
   background: #1d4ed8;
+  color: #fff;
+}
+
+#live-load {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+#live-refresh {
+  background: #0f766e;
   color: #fff;
 }
 
