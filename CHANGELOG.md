@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.9.0] - 2026-03-01
+
+- Added a public read-only leaderboard viewer page with endpoint loading, filters, and pagination.
+- Added full quiz interaction E2E automation (answer -> review -> finalize -> export) using Playwright for regression coverage.
+- Added live hosted pages smoke checks and integrated UX checks workflow for route smoke, interaction E2E, and live verification.
+- Hardened anti-replay and idempotency guidance and endpoint handling docs for leaderboard submissions.
+
 ## [0.8.0] - 2026-03-01
 
 - Fixed quiz page loading reliability by adding multi-path question bank resolution for different deployment base paths.
