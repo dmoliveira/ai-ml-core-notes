@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.11.0] - 2026-03-02
+
+- Fixed live-check dashboard loading to use the correct snapshot path, auto-load data on open, and show freshness and status totals.
+- Added automated unit tests for UX smoke/dashboard scripts and wired them into the `ux-checks` workflow.
+- Improved live smoke diagnostics with stronger flag validation and richer JSON/markdown reporting metadata.
+
 ## [0.10.0] - 2026-03-02
 
 - Improved the shared-result verifier UX with diagnostics, payload helper actions, and faster recovery flows.
