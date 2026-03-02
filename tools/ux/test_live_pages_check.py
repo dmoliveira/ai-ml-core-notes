@@ -28,6 +28,28 @@ def test_parse_json_out_path_requires_value() -> None:
         live_pages_check.parse_json_out_path(["script.py", "--json-out"])
 
 
+def test_parse_base_url_default() -> None:
+    assert (
+        live_pages_check.parse_base_url(["script.py"], live_pages_check.BASE_URL)
+        == live_pages_check.BASE_URL
+    )
+
+
+def test_parse_base_url_flag_trims_trailing_slash() -> None:
+    parsed = live_pages_check.parse_base_url(
+        ["script.py", "--base-url", "https://example.test/demo/"],
+        live_pages_check.BASE_URL,
+    )
+    assert parsed == "https://example.test/demo"
+
+
+def test_parse_base_url_requires_value() -> None:
+    with pytest.raises(RuntimeError, match="--base-url requires a value"):
+        live_pages_check.parse_base_url(
+            ["script.py", "--base-url"], live_pages_check.BASE_URL
+        )
+
+
 def test_parse_int_flag_rejects_zero() -> None:
     with pytest.raises(RuntimeError, match="--retries must be >= 1"):
         live_pages_check.parse_int_flag(
@@ -75,6 +97,7 @@ def test_main_writes_json_payload(
     assert payload["count"] == 2
     assert payload["okCount"] == 2
     assert payload["errorCount"] == 0
+    assert payload["baseUrl"] == live_pages_check.BASE_URL
     assert payload["strict"] is False
     assert payload["retries"] == 1
     assert payload["delaySeconds"] == 0.0
@@ -96,13 +119,22 @@ def test_main_non_strict_failure_returns_zero(
     monkeypatch.setattr(
         sys,
         "argv",
-        ["live_pages_check.py", "--json-out", str(output_path), "--retries", "1"],
+        [
+            "live_pages_check.py",
+            "--json-out",
+            str(output_path),
+            "--base-url",
+            "https://example.test/preview/",
+            "--retries",
+            "1",
+        ],
     )
 
     assert live_pages_check.main() == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     assert payload["okCount"] == 0
     assert payload["errorCount"] == 1
+    assert payload["baseUrl"] == "https://example.test/preview"
     assert payload["checks"][0]["status"] == "error"
     assert payload["checks"][0]["errorType"] == "RuntimeError"
 

@@ -51,6 +51,18 @@ def strict_mode(argv: list[str]) -> bool:
     return "--strict" in argv
 
 
+def parse_base_url(argv: list[str], default: str) -> str:
+    if "--base-url" not in argv:
+        return default
+    idx = argv.index("--base-url")
+    if idx + 1 >= len(argv):
+        raise RuntimeError("--base-url requires a value")
+    value = argv[idx + 1].strip()
+    if not value:
+        raise RuntimeError("--base-url requires a non-empty value")
+    return value.rstrip("/")
+
+
 def parse_int_flag(argv: list[str], flag: str, default: int) -> int:
     if flag not in argv:
         return default
@@ -78,14 +90,16 @@ def parse_float_flag(argv: list[str], flag: str, default: float) -> float:
 def main() -> int:
     json_out = parse_json_out_path(sys.argv)
     strict = strict_mode(sys.argv)
+    base_url = parse_base_url(sys.argv, BASE_URL)
     retries = parse_int_flag(sys.argv, "--retries", 12)
     delay_seconds = parse_float_flag(sys.argv, "--delay-seconds", 10.0)
     rows: list[dict[str, object]] = []
     had_failure = False
     ok_count = 0
     error_count = 0
+    print(f"Live smoke base URL: {base_url}")
     for path in PAGES:
-        url = f"{BASE_URL}{path}"
+        url = f"{base_url}{path}"
         started = time.time()
         try:
             fetch_with_retry(url, retries=retries, delay_seconds=delay_seconds)
@@ -122,6 +136,7 @@ def main() -> int:
             "count": len(rows),
             "okCount": ok_count,
             "errorCount": error_count,
+            "baseUrl": base_url,
             "strict": strict,
             "retries": retries,
             "delaySeconds": delay_seconds,
