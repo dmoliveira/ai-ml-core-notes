@@ -18,11 +18,21 @@ Use this read-only page to load and browse shared leaderboard scores.
       <label for="lb-filter-score">Minimum score %</label>
       <input id="lb-filter-score" type="number" min="0" max="100" value="0">
     </div>
+    <div class="lb-control">
+      <label for="lb-sort">Sort</label>
+      <input id="lb-sort" type="text" value="score_desc" list="lb-sort-options">
+      <datalist id="lb-sort-options">
+        <option value="score_desc"></option>
+        <option value="time_asc"></option>
+        <option value="newest"></option>
+      </datalist>
+    </div>
   </div>
 
   <div class="lb-actions">
     <button id="lb-load" type="button">Load</button>
     <button id="lb-apply" type="button">Apply Filters</button>
+    <button id="lb-export-csv" type="button">Export CSV</button>
     <button id="lb-prev" type="button">Prev</button>
     <button id="lb-next" type="button">Next</button>
   </div>

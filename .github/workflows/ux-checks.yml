@@ -60,4 +60,15 @@ jobs:
         run: sleep 40
 
       - name: Live pages smoke check
-        run: python tools/ux/live_pages_check.py
+        run: python tools/ux/live_pages_check.py --json-out live-pages-latest.json
+
+      - name: Render live dashboard markdown artifact
+        run: python tools/ux/render_live_dashboard.py live-pages-latest.json live-pages-dashboard.md
+
+      - name: Upload live check artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-pages-check
+          path: |
+            live-pages-latest.json
+            live-pages-dashboard.md
