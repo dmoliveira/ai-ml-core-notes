@@ -16,7 +16,7 @@ PAGES = [
 ]
 
 
-def fetch_with_retry(url: str, retries: int = 4, delay_seconds: float = 3.0) -> str:
+def fetch_with_retry(url: str, retries: int = 12, delay_seconds: float = 10.0) -> str:
     last_error: Exception | None = None
     for attempt in range(1, retries + 1):
         try:

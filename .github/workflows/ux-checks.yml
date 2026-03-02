@@ -36,6 +36,8 @@ jobs:
         run: node --check docs/assets/quiz-web.js
 
       - name: Playwright route smoke
+        env:
+          PLAYWRIGHT_CMD: python -m playwright
         run: node tools/ux/playwright_smoke.mjs "file://${{ github.workspace }}/site/"
 
       - name: Playwright interaction e2e
