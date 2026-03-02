@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.10.0] - 2026-03-02
+
+- Improved the shared-result verifier UX with diagnostics, payload helper actions, and faster recovery flows.
+- Added leaderboard viewer sort modes (`score_desc`, `time_asc`, `newest`) and CSV export for offline analysis.
+- Added live-check dashboard generation from CI smoke artifacts with JSON output, markdown rendering, and docs integration.
+
 ## [0.9.0] - 2026-03-01
 
 - Added a public read-only leaderboard viewer page with endpoint loading, filters, and pagination.
