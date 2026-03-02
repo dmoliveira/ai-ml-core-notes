@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.12.0] - 2026-03-02
+
+- Added live-check dashboard drill-down controls with row filtering (`all`, `errors`, `ok`) and optional auto-refresh.
+- Added a per-row error detail column in the dashboard UI to speed up hosted-pages failure triage.
+- Extended shared dashboard/viewer styling for new controls while preserving the existing minimalist docs look.
+
 ## [0.11.0] - 2026-03-02
 
 - Fixed live-check dashboard loading to use the correct snapshot path, auto-load data on open, and show freshness and status totals.
