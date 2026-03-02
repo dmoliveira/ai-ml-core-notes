@@ -20,6 +20,7 @@ const pages = [
   "/practice/interview-quiz/",
   "/practice/quiz-web/",
   "/practice/leaderboard-endpoint/",
+  "/practice/leaderboard-viewer/",
   "/practice/verify-shared-result/",
   "/practice/lab-01-tabular/",
   "/practice/lab-02-rag/",
