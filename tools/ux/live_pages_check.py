@@ -57,7 +57,10 @@ def parse_int_flag(argv: list[str], flag: str, default: int) -> int:
     idx = argv.index(flag)
     if idx + 1 >= len(argv):
         raise RuntimeError(f"{flag} requires a value")
-    return int(argv[idx + 1])
+    value = int(argv[idx + 1])
+    if value < 1:
+        raise RuntimeError(f"{flag} must be >= 1")
+    return value
 
 
 def parse_float_flag(argv: list[str], flag: str, default: float) -> float:
@@ -66,7 +69,10 @@ def parse_float_flag(argv: list[str], flag: str, default: float) -> float:
     idx = argv.index(flag)
     if idx + 1 >= len(argv):
         raise RuntimeError(f"{flag} requires a value")
-    return float(argv[idx + 1])
+    value = float(argv[idx + 1])
+    if value < 0:
+        raise RuntimeError(f"{flag} must be >= 0")
+    return value
 
 
 def main() -> int:
@@ -76,6 +82,8 @@ def main() -> int:
     delay_seconds = parse_float_flag(sys.argv, "--delay-seconds", 10.0)
     rows: list[dict[str, object]] = []
     had_failure = False
+    ok_count = 0
+    error_count = 0
     for path in PAGES:
         url = f"{BASE_URL}{path}"
         started = time.time()
@@ -83,6 +91,7 @@ def main() -> int:
             fetch_with_retry(url, retries=retries, delay_seconds=delay_seconds)
             elapsed = time.time() - started
             print(f"ok {url}")
+            ok_count += 1
             rows.append(
                 {
                     "url": url,
@@ -93,6 +102,7 @@ def main() -> int:
             )
         except Exception as exc:  # noqa: BLE001
             had_failure = True
+            error_count += 1
             elapsed = time.time() - started
             print(f"warn {url} :: {exc}")
             rows.append(
@@ -100,6 +110,7 @@ def main() -> int:
                     "url": url,
                     "status": "error",
                     "error": str(exc),
+                    "errorType": type(exc).__name__,
                     "elapsedSeconds": round(elapsed, 3),
                     "checkedAt": datetime.now(timezone.utc).isoformat(),
                 }
@@ -109,16 +120,23 @@ def main() -> int:
         payload = {
             "generatedAt": datetime.now(timezone.utc).isoformat(),
             "count": len(rows),
+            "okCount": ok_count,
+            "errorCount": error_count,
+            "strict": strict,
+            "retries": retries,
+            "delaySeconds": delay_seconds,
             "checks": rows,
         }
         json_out.parent.mkdir(parents=True, exist_ok=True)
         json_out.write_text(f"{json.dumps(payload, indent=2)}\n", encoding="utf-8")
 
     if had_failure:
-        print("Live smoke completed with warnings.")
+        print(f"Live smoke completed with warnings: ok={ok_count} error={error_count}")
         return 1 if strict else 0
 
-    print(f"Live smoke passed for {len(PAGES)} pages.")
+    print(
+        f"Live smoke passed for {len(PAGES)} pages (ok={ok_count} error={error_count})."
+    )
     return 0
 
 

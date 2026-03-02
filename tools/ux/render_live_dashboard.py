@@ -7,10 +7,16 @@ from pathlib import Path
 
 def render_markdown(payload: dict) -> str:
     rows = payload.get("checks", [])
+    ok_count = payload.get("okCount", "-")
+    error_count = payload.get("errorCount", "-")
+    retries = payload.get("retries", "-")
+    delay_seconds = payload.get("delaySeconds", "-")
+    strict = payload.get("strict", "-")
     lines = [
         "# Live Pages Check Dashboard",
         "",
         f"Generated at: `{payload.get('generatedAt', '-')}`",
+        f"Summary: ok={ok_count}, error={error_count}, strict={strict}, retries={retries}, delaySeconds={delay_seconds}",
         "",
         "| URL | Status | Elapsed (s) | Checked At |",
         "| --- | --- | ---: | --- |",
