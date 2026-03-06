@@ -12,6 +12,7 @@ def test_render_markdown_with_rows() -> None:
     payload = {
         "generatedAt": "2026-03-02T00:00:00Z",
         "baseUrl": "https://example.test/demo",
+        "paths": ["/", "/practice/"],
         "okCount": 1,
         "errorCount": 0,
         "strict": False,
@@ -31,6 +32,7 @@ def test_render_markdown_with_rows() -> None:
     assert "# Live Pages Check Dashboard" in markdown
     assert "Generated at: `2026-03-02T00:00:00Z`" in markdown
     assert "Base URL: `https://example.test/demo`" in markdown
+    assert "Paths monitored: `2`" in markdown
     assert (
         "Summary: ok=1, error=0, strict=False, retries=2, delaySeconds=5.0" in markdown
     )

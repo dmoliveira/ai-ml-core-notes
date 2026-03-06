@@ -1,6 +1,7 @@
 {
   "generatedAt": "not-available-yet",
   "baseUrl": "https://dmoliveira.github.io/ai-ml-core-notes",
+  "paths": ["/", "/practice/", "/practice/quiz-web/", "/practice/leaderboard-viewer/", "/interview-prep/"],
   "count": 0,
   "checks": []
 }

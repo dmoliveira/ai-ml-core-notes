@@ -50,6 +50,26 @@ def test_parse_base_url_requires_value() -> None:
         )
 
 
+def test_parse_paths_default() -> None:
+    assert (
+        live_pages_check.parse_paths(["script.py"], live_pages_check.PAGES)
+        == live_pages_check.PAGES
+    )
+
+
+def test_parse_paths_normalizes_values() -> None:
+    parsed = live_pages_check.parse_paths(
+        ["script.py", "--paths", "practice, /interview-prep, /practice/quiz-web/"],
+        live_pages_check.PAGES,
+    )
+    assert parsed == ["/practice/", "/interview-prep/", "/practice/quiz-web/"]
+
+
+def test_parse_paths_requires_value() -> None:
+    with pytest.raises(RuntimeError, match="--paths requires a comma-separated value"):
+        live_pages_check.parse_paths(["script.py", "--paths"], live_pages_check.PAGES)
+
+
 def test_parse_int_flag_rejects_zero() -> None:
     with pytest.raises(RuntimeError, match="--retries must be >= 1"):
         live_pages_check.parse_int_flag(
@@ -98,6 +118,7 @@ def test_main_writes_json_payload(
     assert payload["okCount"] == 2
     assert payload["errorCount"] == 0
     assert payload["baseUrl"] == live_pages_check.BASE_URL
+    assert payload["paths"] == ["/", "/practice/"]
     assert payload["strict"] is False
     assert payload["retries"] == 1
     assert payload["delaySeconds"] == 0.0
@@ -125,6 +146,8 @@ def test_main_non_strict_failure_returns_zero(
             str(output_path),
             "--base-url",
             "https://example.test/preview/",
+            "--paths",
+            "/practice,/quiz-web",
             "--retries",
             "1",
         ],
@@ -133,8 +156,9 @@ def test_main_non_strict_failure_returns_zero(
     assert live_pages_check.main() == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     assert payload["okCount"] == 0
-    assert payload["errorCount"] == 1
+    assert payload["errorCount"] == 2
     assert payload["baseUrl"] == "https://example.test/preview"
+    assert payload["paths"] == ["/practice/", "/quiz-web/"]
     assert payload["checks"][0]["status"] == "error"
     assert payload["checks"][0]["errorType"] == "RuntimeError"
 
