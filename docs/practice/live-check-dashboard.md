@@ -1,6 +1,6 @@
 # Live Check Dashboard
 
-This page renders the latest available live-pages smoke JSON snapshot with filters, error drill-down, and optional auto-refresh. The snapshot can come from the default production URL or a custom preview URL via `python tools/ux/live_pages_check.py --base-url <url> --json-out ...`.
+This page renders the latest available live-pages smoke JSON snapshot with filters, error drill-down, and optional auto-refresh. The snapshot can come from the default production URL or a custom preview URL via `python tools/ux/live_pages_check.py --base-url <url> --paths /,/practice/ --json-out ...`.
 
 <link rel="stylesheet" href="../../assets/leaderboard-viewer.css">
 
@@ -129,7 +129,8 @@ async function loadLiveSnapshot() {
     }
     renderSummary(payload, rows);
     const sourceBaseUrl = payload.baseUrl || "-";
-    status.textContent = `Snapshot generated at: ${payload.generatedAt || "-"} (${formatAge(payload.generatedAt)}) · base: ${sourceBaseUrl}`;
+    const sourcePathsCount = Array.isArray(payload.paths) ? payload.paths.length : "-";
+    status.textContent = `Snapshot generated at: ${payload.generatedAt || "-"} (${formatAge(payload.generatedAt)}) · base: ${sourceBaseUrl} · paths: ${sourcePathsCount}`;
   } catch (error) {
     status.textContent = String(error.message || error);
     summary.textContent = "";

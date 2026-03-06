@@ -8,6 +8,7 @@ from pathlib import Path
 def render_markdown(payload: dict) -> str:
     rows = payload.get("checks", [])
     base_url = payload.get("baseUrl", "-")
+    paths = payload.get("paths", [])
     ok_count = payload.get("okCount", "-")
     error_count = payload.get("errorCount", "-")
     retries = payload.get("retries", "-")
@@ -18,6 +19,7 @@ def render_markdown(payload: dict) -> str:
         "",
         f"Generated at: `{payload.get('generatedAt', '-')}`",
         f"Base URL: `{base_url}`",
+        f"Paths monitored: `{len(paths) if isinstance(paths, list) else '-'}`",
         f"Summary: ok={ok_count}, error={error_count}, strict={strict}, retries={retries}, delaySeconds={delay_seconds}",
         "",
         "| URL | Status | Elapsed (s) | Checked At |",

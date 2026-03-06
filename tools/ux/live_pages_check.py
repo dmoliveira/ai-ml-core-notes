@@ -63,6 +63,29 @@ def parse_base_url(argv: list[str], default: str) -> str:
     return value.rstrip("/")
 
 
+def parse_paths(argv: list[str], default: list[str]) -> list[str]:
+    if "--paths" not in argv:
+        return list(default)
+    idx = argv.index("--paths")
+    if idx + 1 >= len(argv):
+        raise RuntimeError("--paths requires a comma-separated value")
+    raw = argv[idx + 1].strip()
+    if not raw:
+        raise RuntimeError("--paths requires a non-empty value")
+    paths = [item.strip() for item in raw.split(",") if item.strip()]
+    if not paths:
+        raise RuntimeError("--paths requires at least one path")
+    normalized: list[str] = []
+    for path in paths:
+        candidate = path
+        if not candidate.startswith("/"):
+            candidate = f"/{candidate}"
+        if not candidate.endswith("/"):
+            candidate = f"{candidate}/"
+        normalized.append(candidate)
+    return normalized
+
+
 def parse_int_flag(argv: list[str], flag: str, default: int) -> int:
     if flag not in argv:
         return default
@@ -91,6 +114,7 @@ def main() -> int:
     json_out = parse_json_out_path(sys.argv)
     strict = strict_mode(sys.argv)
     base_url = parse_base_url(sys.argv, BASE_URL)
+    pages = parse_paths(sys.argv, PAGES)
     retries = parse_int_flag(sys.argv, "--retries", 12)
     delay_seconds = parse_float_flag(sys.argv, "--delay-seconds", 10.0)
     rows: list[dict[str, object]] = []
@@ -98,7 +122,8 @@ def main() -> int:
     ok_count = 0
     error_count = 0
     print(f"Live smoke base URL: {base_url}")
-    for path in PAGES:
+    print(f"Live smoke paths: {len(pages)}")
+    for path in pages:
         url = f"{base_url}{path}"
         started = time.time()
         try:
@@ -137,6 +162,7 @@ def main() -> int:
             "okCount": ok_count,
             "errorCount": error_count,
             "baseUrl": base_url,
+            "paths": pages,
             "strict": strict,
             "retries": retries,
             "delaySeconds": delay_seconds,
@@ -150,7 +176,7 @@ def main() -> int:
         return 1 if strict else 0
 
     print(
-        f"Live smoke passed for {len(PAGES)} pages (ok={ok_count} error={error_count})."
+        f"Live smoke passed for {len(pages)} pages (ok={ok_count} error={error_count})."
     )
     return 0
 
