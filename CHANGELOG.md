@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.14.0] - 2026-03-02
+
+- Added `--paths` support to live smoke checks so route subsets can be targeted per environment.
+- Added monitored path metadata to live smoke JSON/markdown outputs and dashboard status context.
+- Expanded UX smoke script tests to cover custom path parsing and path-aware reporting behavior.
+
 ## [0.13.0] - 2026-03-02
 
 - Added `--base-url` support to live smoke checks so CI and local runs can target production or preview deployments.
