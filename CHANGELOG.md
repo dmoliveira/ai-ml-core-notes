@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.20.0] - 2026-03-02
+
+- Expanded FAQ with practical study loop, weekly cadence guidance, and clearer progress signals.
+- Linked FAQ guidance more explicitly to interview-prep and planning pages for faster learner navigation.
+- Improved project plan clarity with a concise usage guide and current execution focus section.
+
 ## [0.19.0] - 2026-03-02
 
 - Improved AI engineering docs with an explicit progression into agent systems and readiness checks for safe adoption.
