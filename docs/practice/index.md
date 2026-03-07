@@ -28,7 +28,7 @@ Hands-on labs help convert theory into engineering skill.
 - [Leaderboard Endpoint](leaderboard-endpoint.md): optional serverless endpoint contract for shared rankings
 - [Leaderboard Viewer](leaderboard-viewer.md): read-only public score board with filters and pagination
 - [Verify Shared Result](verify-shared-result.md): signature checker for shared quiz links
-- [Live Check Dashboard](live-check-dashboard.md): latest GitHub Pages live smoke snapshot viewer
+- [Live Check Dashboard](live-check-dashboard.md): live smoke snapshot viewer with base-url/path context and error triage
 
 ## Recommended datasets and platforms
 
