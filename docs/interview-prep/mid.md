@@ -21,3 +21,9 @@ Use this track for AI engineer or mid-level ML engineer interviews.
 - Build: retrieval-augmented QA prototype
 - Add: evaluation set with 30-50 curated questions
 - Deliverable: architecture note with risk register
+
+## Common mistakes to avoid
+
+- Proposing architecture changes without success criteria.
+- Ignoring experiment reproducibility and versioning details.
+- Failing to define rollback triggers for production regressions.
