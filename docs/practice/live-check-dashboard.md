@@ -2,6 +2,34 @@
 
 This page renders the latest available live-pages smoke JSON snapshot with filters, error drill-down, and optional auto-refresh. The snapshot can come from the default production URL or a custom preview URL via `python tools/ux/live_pages_check.py --base-url <url> --paths /,/practice/ --json-out ...`.
 
+## Quick run commands
+
+Generate a production snapshot:
+
+```bash
+python tools/ux/live_pages_check.py --json-out docs/stats/live-pages-latest.json
+```
+
+Generate a preview snapshot with selected paths:
+
+```bash
+python tools/ux/live_pages_check.py --base-url https://example-preview.domain --paths /,/practice/,/practice/quiz-web/ --json-out docs/stats/live-pages-latest.json
+```
+
+Render a markdown artifact from the JSON snapshot:
+
+```bash
+python tools/ux/render_live_dashboard.py docs/stats/live-pages-latest.json live-pages-dashboard.md
+```
+
+## How to read this dashboard
+
+- `Total`, `OK`, and `Errors` summarize the current JSON payload only.
+- `Freshness` estimates snapshot age from `generatedAt`.
+- `base` in the status line shows which deployment URL the check targeted.
+- `paths` in the status line shows how many routes were monitored in that run.
+- The `Error` column surfaces `errorType` or message for faster triage.
+
 <link rel="stylesheet" href="../../assets/leaderboard-viewer.css">
 
 <div class="lb-app">

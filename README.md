@@ -42,6 +42,7 @@ By the end, you will have a concrete learning path and a baseline score.
 - Deep technical understanding: `docs/deep-dives/index.md`
 - Interview readiness: `docs/interview-prep/question-bank.md`
 - Hands-on practice: `docs/practice/quiz-web.md`
+- Docs/site reliability checks: `docs/practice/live-check-dashboard.md`
 - FAQ and blockers: `docs/faq.md`
 - Project roadmap and execution: `docs/plan/project-plan.md`
 
