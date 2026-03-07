@@ -43,6 +43,7 @@ By the end, you will have a concrete learning path and a baseline score.
 - Foundation-to-depth sequence: `docs/foundations/index.md` -> `docs/summaries/index.md` -> `docs/deep-dives/index.md`
 - ML-to-DL progression: `docs/machine-learning/index.md` -> `docs/deep-learning/index.md`
 - AI Engineering-to-Agents progression: `docs/ai-engineering/index.md` -> `docs/ai-agents/index.md`
+- Practice + revision loop: `docs/practice/index.md` -> `docs/summaries/index.md`
 - Interview readiness: `docs/interview-prep/question-bank.md`
 - Hands-on practice: `docs/practice/quiz-web.md`
 - Docs/site reliability checks: `docs/practice/live-check-dashboard.md`
