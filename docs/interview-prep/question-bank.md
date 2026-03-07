@@ -2,6 +2,12 @@
 
 Use this bank for mock interviews and self-evaluation.
 
+## How to practice with this bank
+
+- Timebox each answer to 3-5 minutes.
+- Use the structure: `context -> approach -> metric -> risk -> fallback`.
+- After each answer, write one sentence for what you would improve.
+
 ## Junior
 
 - Explain the difference between precision and recall. When does each matter more?
@@ -28,3 +34,10 @@ Use this bank for mock interviews and self-evaluation.
 - Python: implement evaluation metrics and threshold tuning for classification.
 - R: build a reproducible training pipeline with feature preprocessing.
 - Julia: benchmark two models and compare runtime and predictive quality.
+
+## Fast debrief template
+
+- What did I answer well?
+- What assumption did I forget to state?
+- Which metric should I have prioritized?
+- What would be my rollback or mitigation plan?

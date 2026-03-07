@@ -21,3 +21,9 @@ Use this track for senior/principal AI engineering and technical leadership role
 - Scenario: migrate a prototype assistant into a production platform
 - Include: SLOs, rollback strategy, on-call and incident triage flow
 - Deliverable: 2-page design doc + executive summary
+
+## Common mistakes to avoid
+
+- Over-indexing on tooling and under-specifying operating model.
+- Skipping cost controls and multi-team governance boundaries.
+- Presenting roadmap outcomes without measurable leading indicators.

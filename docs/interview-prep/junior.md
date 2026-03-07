@@ -21,3 +21,9 @@ Use this track if you are preparing for internship or junior AI/ML roles.
 - Dataset: Titanic or House Prices on Kaggle
 - Goal: submit one baseline and one improved model
 - Deliverable: write a one-page model decision note
+
+## Common mistakes to avoid
+
+- Treating accuracy as the only metric when classes are imbalanced.
+- Explaining model choice without discussing data quality or leakage.
+- Skipping error analysis by segment (for example, minority classes).
