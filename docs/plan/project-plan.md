@@ -1,5 +1,11 @@
 # Project Plan - AI/ML Core Notes
 
+## How to use this plan
+
+- Use this page as the single source of truth for scope, delivery model, and quality gates.
+- If you are a learner, use it to understand what is covered and how sections connect.
+- If you are a contributor, use it to pick focused improvements that fit the release cadence.
+
 ## Executive summary
 
 This project is a public, MIT-licensed, docs-first repository designed to teach AI and AI engineering quickly and deeply.
@@ -31,6 +37,13 @@ It serves two core needs: practical learning for building real AI systems and in
 - Content-first architecture in Markdown.
 - Automation-first publishing via GitHub Actions.
 - Clear definition of done and validation checks.
+
+## Current execution focus
+
+- Keep each release narrowly scoped and learner-impact first.
+- Prioritize content cohesion between adjacent tracks (for example foundations -> deep dives).
+- Prefer practical guidance, checklists, and debrief loops over long theoretical blocks.
+- Preserve reliable docs publishing and validation on every release.
 
 ## Activity tracking
 
