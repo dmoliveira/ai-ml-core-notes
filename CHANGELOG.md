@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.19.0] - 2026-03-02
+
+- Improved AI engineering docs with an explicit progression into agent systems and readiness checks for safe adoption.
+- Improved AI agents docs with entry criteria, baseline-vs-agent progression, and required output artifacts.
+- Added direct AI engineering-to-agents sequence navigation in README goal paths.
+
 ## [0.18.0] - 2026-03-02
 
 - Improved machine-learning docs with explicit transition guidance and readiness checks before moving into deep learning.
