@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.17.0] - 2026-03-02
+
+- Improved foundations docs with a start-to-depth sequence and clear readiness signals before moving to advanced material.
+- Improved deep-dives docs with entry criteria, a focused study loop, and expected output artifacts.
+- Added a direct foundation-to-depth learning path in README goal navigation.
+
 ## [0.16.0] - 2026-03-02
 
 - Refined interview prep entry docs with a measurable 30-minute prep loop and a compact answer-quality rubric.
