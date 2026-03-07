@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.21.0] - 2026-03-02
+
+- Improved practice docs with a clearer weekly usage loop, lab selection guidance, and fast debrief prompts.
+- Improved summaries docs with explicit usage timing, a 15-minute revision loop, and measurable progress signals.
+- Added direct practice-to-summaries navigation in README goal-based paths.
+
 ## [0.20.0] - 2026-03-02
 
 - Expanded FAQ with practical study loop, weekly cadence guidance, and clearer progress signals.
