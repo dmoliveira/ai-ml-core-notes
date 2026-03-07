@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.18.0] - 2026-03-02
+
+- Improved machine-learning docs with explicit transition guidance and readiness checks before moving into deep learning.
+- Improved deep-learning docs with entry criteria, baseline-vs-DL comparison loop, and expected output artifacts.
+- Added direct ML-to-DL progression navigation in README goal-based paths.
+
 ## [0.17.0] - 2026-03-02
 
 - Improved foundations docs with a start-to-depth sequence and clear readiness signals before moving to advanced material.
