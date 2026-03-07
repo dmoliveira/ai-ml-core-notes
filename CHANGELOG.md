@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.16.0] - 2026-03-02
+
+- Refined interview prep entry docs with a measurable 30-minute prep loop and a compact answer-quality rubric.
+- Added a practical practice/debrief method to the question bank for faster mock interview iteration.
+- Added role-specific common mistake checklists across junior, mid, and senior tracks.
+
 ## [0.15.0] - 2026-03-02
 
 - Refined live-check dashboard docs with copy/paste command examples for production, preview, and markdown artifact workflows.
