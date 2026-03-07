@@ -41,6 +41,7 @@ By the end, you will have a concrete learning path and a baseline score.
 - Fast refresher: `docs/summaries/index.md`
 - Deep technical understanding: `docs/deep-dives/index.md`
 - Foundation-to-depth sequence: `docs/foundations/index.md` -> `docs/summaries/index.md` -> `docs/deep-dives/index.md`
+- ML-to-DL progression: `docs/machine-learning/index.md` -> `docs/deep-learning/index.md`
 - Interview readiness: `docs/interview-prep/question-bank.md`
 - Hands-on practice: `docs/practice/quiz-web.md`
 - Docs/site reliability checks: `docs/practice/live-check-dashboard.md`
