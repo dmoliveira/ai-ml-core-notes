@@ -11,6 +11,15 @@ Use this loop when you have limited time and want measurable progress.
 3. Score yourself with a simple rubric: `clarity`, `correctness`, `trade-offs` (0-2 each).
 4. Write one improvement note and repeat with a new question set tomorrow.
 
+## Prep + quiz loop
+
+Use this when you want faster feedback on progress:
+
+1. Run the 30-minute prep loop here.
+2. Take one timed session in `practice/interview-quiz.md`.
+3. Compare weak topics with your self-scored rubric.
+4. Pick one targeted improvement for your next session.
+
 ## Role levels
 
 - Junior: core concepts, metrics, and model basics
