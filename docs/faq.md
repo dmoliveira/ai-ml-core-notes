@@ -47,3 +47,12 @@ Track three signals each week:
 - Concept clarity: can you explain one topic without notes?
 - Practical output: did you complete one runnable exercise?
 - Interview readiness: did your answers improve in structure and trade-offs?
+
+## What if I feel stuck between too many sections?
+
+Use a narrow reset loop:
+
+1. Pick one core section only for the next two sessions.
+2. Add one small practice task tied to that section.
+3. Write one confusion point and resolve it with one targeted read.
+4. Resume broader navigation only after confidence improves.
