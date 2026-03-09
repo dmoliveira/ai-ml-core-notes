@@ -2,6 +2,12 @@
 
 -
 
+## Scope
+
+- [ ] docs only
+- [ ] tests/automation
+- [ ] mixed (explain why)
+
 ## Why it changed
 
 -
@@ -11,6 +17,7 @@
 - [ ] `mkdocs build --strict`
 - [ ] navigation links updated for new pages
 - [ ] references and attributions checked
+- [ ] learner impact and release scope explained
 
 ## Definition of done checklist
 
