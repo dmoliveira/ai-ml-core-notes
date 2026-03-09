@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.37.0] - 2026-03-10
+
+- Improved docs home with a weekly navigation loop to keep multi-path study plans focused and actionable.
+- Improved FAQ with a stuck-state reset loop for recovering momentum when section choice feels overwhelming.
+- Improved continuity between entry-point navigation and weekly learning execution decisions.
+
 ## [0.36.0] - 2026-03-10
 
 - Improved interview-prep docs with a weak-answer repair loop for clearer, metric-backed response revision.
