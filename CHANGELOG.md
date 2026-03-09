@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.31.0] - 2026-03-02
+
+- Improved AI agents docs with an explicit evaluation loop to compare baseline and autonomous workflows before scaling autonomy.
+- Improved shared-result verification docs with an incident-response loop for invalid signatures and untrusted payload handling.
+- Improved continuity between agent quality controls and trust verification practices.
+
 ## [0.30.0] - 2026-03-02
 
 - Improved AI engineering docs with a live verification loop tying operational controls to hosted smoke checks.
