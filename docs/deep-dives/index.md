@@ -31,3 +31,10 @@ Recommended loop:
 - Evidence: which metric or observation supports the decision?
 - Risk: what can fail first?
 - Mitigation: what is the smallest control to reduce that risk?
+
+## Decision stress-test loop
+
+1. Take your current deep-dive decision and state one opposite choice.
+2. Define one scenario where the opposite choice could win.
+3. Identify the metric that would reveal the better option.
+4. Keep your original choice only if it still wins under that test.
