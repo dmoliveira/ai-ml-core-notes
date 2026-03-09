@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.39.0] - 2026-03-10
+
+- Improved practice docs with a weekly cadence loop that balances baseline replay with targeted improvement.
+- Improved AI engineering docs with a deployment readiness loop that validates critical path, alerting, and incident rehearsal.
+- Improved continuity between lab iteration discipline and production reliability decisions.
+
 ## [0.38.0] - 2026-03-10
 
 - Improved wiki docs with a sync check loop to keep quick links accurate and verified.
