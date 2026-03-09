@@ -52,3 +52,10 @@ Use this loop to protect gains while iterating quickly:
 
 - Scikit-learn user guide: https://scikit-learn.org/stable/user_guide.html
 - Kaggle competitions: https://www.kaggle.com/competitions
+
+## Error-segment recovery loop
+
+1. Isolate one segment where model error is consistently high.
+2. Compare feature coverage and label quality for that segment.
+3. Apply one minimal change and re-evaluate only that segment first.
+4. Promote the change globally only if segment and overall metrics both hold.

@@ -53,3 +53,10 @@ Use this loop when baseline metrics look good but confidence is low:
 
 - Kaggle micro-courses: https://www.kaggle.com/learn
 - 3Blue1Brown linear algebra: https://www.3blue1brown.com/topics/linear-algebra
+
+## Concept transfer loop
+
+1. Pick one concept and explain it in a different domain example.
+2. Validate whether the same metric logic still applies.
+3. Note one place where the concept breaks down.
+4. Add one correction before reusing the concept elsewhere.
