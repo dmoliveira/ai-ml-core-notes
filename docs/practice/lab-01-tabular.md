@@ -30,3 +30,10 @@ Train a reliable baseline classifier on tabular data, then improve it with targe
 - Did you guard against leakage in features or split strategy?
 - Did you compare at least one calibration or threshold variant?
 - Did you document one failure mode and one mitigation?
+
+## Post-retrospective iteration loop
+
+1. Pick one weak metric from your baseline vs improved table.
+2. Identify whether the issue is data quality, feature design, or thresholding.
+3. Apply one focused change and re-run on the same split.
+4. Keep the change only if it improves the weak metric without harming overall balance.

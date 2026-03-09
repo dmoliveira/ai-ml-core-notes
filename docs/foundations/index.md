@@ -40,6 +40,15 @@ Use this loop before moving into harder sections:
 3. Add one control (stratification, validation check, or threshold tuning).
 4. Re-run and record whether quality or robustness improved.
 
+## Assumption-check loop
+
+Use this loop when baseline metrics look good but confidence is low:
+
+1. List the top two assumptions behind your current model setup.
+2. Stress-test each assumption with one counter-example slice.
+3. Record where performance drops and why it matters.
+4. Add one data or evaluation control before trusting the result.
+
 ## External references
 
 - Kaggle micro-courses: https://www.kaggle.com/learn
