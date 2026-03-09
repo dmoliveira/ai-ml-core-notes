@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.35.0] - 2026-03-10
+
+- Improved summaries docs with a revision confidence loop for active recall and fast correction before progression.
+- Improved deep-dives docs with a decision stress-test loop for counter-scenario validation using explicit metrics.
+- Improved continuity between quick revision confidence and deeper architecture decision quality.
+
 ## [0.34.0] - 2026-03-10
 
 - Improved foundations docs with an assumption-check loop for stress-testing baseline confidence before trusting strong metrics.
