@@ -24,3 +24,8 @@ body:
     attributes:
       label: Reproduction steps
       description: Provide steps to reproduce the issue.
+  - type: textarea
+    id: impact
+    attributes:
+      label: Learner impact
+      description: Explain how this issue affects learning flow, correctness, or trust.

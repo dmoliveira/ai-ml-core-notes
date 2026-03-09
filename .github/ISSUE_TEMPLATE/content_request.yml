@@ -38,3 +38,9 @@ body:
     attributes:
       label: Suggested references
       description: Include links to docs, papers, datasets, or examples.
+  - type: textarea
+    id: scope
+    attributes:
+      label: Proposed scope (smallest useful change)
+      description: Suggest the smallest shippable update and where it should be placed.
+      placeholder: One page update + one index link update.
