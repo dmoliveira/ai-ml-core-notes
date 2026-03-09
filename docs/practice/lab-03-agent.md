@@ -23,3 +23,12 @@ Design a simple AI agent loop with tool calls, memory constraints, and measurabl
 - Agent implementation with reproducible run path
 - Failure case matrix and mitigations
 - Short demo script with expected outputs
+
+## Ops-focused extension
+
+After baseline completion, add an operations pass:
+
+1. Define 3 alerts tied to concrete agent failures.
+2. Add a rollback trigger for unsafe or degraded behavior.
+3. Simulate one failure and capture incident notes.
+4. Update your failure matrix with prevention controls.

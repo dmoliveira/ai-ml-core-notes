@@ -31,6 +31,15 @@ Treat agents as an extension of production AI engineering, not a separate univer
 - You have measurable quality/latency/cost baselines.
 - You have rollback and policy controls defined for unsafe output paths.
 
+## Agent operations playbook
+
+Use this mini playbook before production rollout:
+
+1. Define failure classes (tool timeout, wrong tool choice, unsafe response).
+2. Map each failure class to an alert and owner.
+3. Add one containment control per failure class.
+4. Run one game-day scenario and document corrective actions.
+
 ## External references
 
 - MLOps landscape: https://landscape.lfai.foundation/
