@@ -30,3 +30,10 @@ Build a small retrieval-augmented question answering workflow and evaluate respo
 - Did chunk size hurt precision or recall?
 - Did answer quality degrade when context was noisy?
 - Did you log one fix per major failure pattern?
+
+## Failure-to-fix loop
+
+1. Pick one failed question and inspect retrieved chunks.
+2. Classify the failure as retrieval, context quality, or answer synthesis.
+3. Apply one targeted fix and re-run the same question set.
+4. Keep the change only if pass rate improves without new regressions.
