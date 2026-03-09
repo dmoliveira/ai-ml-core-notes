@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.25.0] - 2026-03-02
+
+- Improved summaries docs with a clear bridge from fast revision into targeted deep-dive study.
+- Improved deep-dives docs with a compact note template for decision, evidence, risk, and mitigation capture.
+- Improved continuity between revision loops and deeper technical practice.
+
 ## [0.24.0] - 2026-03-02
 
 - Improved interview-prep docs with an explicit prep-plus-quiz feedback loop.
