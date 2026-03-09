@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.41.0] - 2026-03-10
+
+- Improved junior interview prep with an answer-structure loop to improve clarity, metrics, and mitigation framing.
+- Improved mid-level interview prep with a scenario debrief loop that enforces trade-offs, guardrails, and rollback triggers.
+- Improved continuity between interview communication structure and production-minded decision quality.
+
 ## [0.40.0] - 2026-03-10
 
 - Improved foundations docs with a concept transfer loop for checking understanding across domain examples.
