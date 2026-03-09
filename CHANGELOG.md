@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.27.0] - 2026-03-02
+
+- Improved foundations docs with a baseline quality loop for failure-mode detection and control selection.
+- Improved Lab 01 docs with a robustness checklist covering imbalance, leakage, calibration, and mitigation capture.
+- Improved continuity between foundational learning and reliable first-model execution.
+
 ## [0.26.0] - 2026-03-02
 
 - Improved AI engineering docs with a compact agent operations playbook for failure classes, ownership, containment, and game-day validation.
