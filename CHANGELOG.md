@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.22.0] - 2026-03-02
+
+- Improved contribution guidance with a quick-start flow, release cadence expectations, and stronger validation/evidence notes.
+- Improved PR template quality gates by adding explicit scope tagging and learner-impact/release-scope checks.
+- Improved issue triage quality with new smallest-scope and learner-impact fields in content and bug templates.
+
 ## [0.21.0] - 2026-03-02
 
 - Improved practice docs with a clearer weekly usage loop, lab selection guidance, and fast debrief prompts.
