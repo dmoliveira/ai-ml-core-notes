@@ -41,3 +41,10 @@ Use this bridge when a summary exposes gaps:
 2. Write a two-sentence explanation without looking at notes.
 3. Compare against the source page and correct one missing detail.
 4. Re-test with one interview-style question before moving on.
+
+## Transfer-to-practice loop
+
+1. Pick one summary takeaway and map it to a concrete practice task.
+2. Define one metric that proves the takeaway improved execution.
+3. Run the task and capture one unexpected result.
+4. Update your summary note with that result before the next revision.
