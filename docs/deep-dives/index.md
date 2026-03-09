@@ -38,3 +38,10 @@ Recommended loop:
 2. Define one scenario where the opposite choice could win.
 3. Identify the metric that would reveal the better option.
 4. Keep your original choice only if it still wins under that test.
+
+## Depth-to-roadmap loop
+
+1. Convert one deep-dive decision into a roadmap recommendation.
+2. Add one dependency and one risk for implementation planning.
+3. Set one validation checkpoint for the first release milestone.
+4. Revisit the recommendation after checkpoint evidence is collected.
