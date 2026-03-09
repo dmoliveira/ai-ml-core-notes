@@ -23,3 +23,10 @@ Build a small retrieval-augmented question answering workflow and evaluate respo
 - Working retrieval pipeline
 - Evaluation report with pass/fail analysis
 - Error taxonomy and next iteration plan
+
+## RAG evaluation checklist
+
+- Did retrieval return relevant context for failed answers?
+- Did chunk size hurt precision or recall?
+- Did answer quality degrade when context was noisy?
+- Did you log one fix per major failure pattern?
