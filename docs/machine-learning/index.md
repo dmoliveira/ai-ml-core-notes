@@ -39,6 +39,15 @@ Use this loop to improve baseline quality before adding complexity:
 3. Apply one targeted change (features, threshold, or sampling).
 4. Re-run and keep only changes with measurable improvement.
 
+## Baseline regression loop
+
+Use this loop to protect gains while iterating quickly:
+
+1. Freeze a baseline score on a fixed validation split.
+2. Re-test the top three failure cases after each change.
+3. Record metric deltas and the decision to keep or revert.
+4. Revert changes that improve one segment but regress the overall objective.
+
 ## External references
 
 - Scikit-learn user guide: https://scikit-learn.org/stable/user_guide.html
