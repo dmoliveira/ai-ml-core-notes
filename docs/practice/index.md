@@ -59,3 +59,10 @@ Small consistent runs beat one large irregular sprint.
 - Kaggle datasets and competitions: https://www.kaggle.com/
 - UCI machine learning repository: https://archive.ics.uci.edu/
 - Hugging Face datasets: https://huggingface.co/datasets
+
+## Weekly practice cadence loop
+
+1. Schedule two short lab sessions before planning advanced work.
+2. Keep one session for baseline replay and one for targeted improvement.
+3. Compare both runs with one shared metric table.
+4. Carry one focused experiment into the next week.
