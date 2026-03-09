@@ -147,3 +147,10 @@ Each topic is complete when all criteria pass:
 2. Limit changes to adjacent sections that improve continuity.
 3. Validate docs and quiz tooling before opening the PR.
 4. Capture one changelog line focused on learner outcome.
+
+## Continuity checkpoint loop
+
+1. Verify the current release objective still matches learner pain points.
+2. Check adjacent sections for broken flow or missing links.
+3. Confirm validations and evidence are reproducible in the active worktree.
+4. Close the release only after changelog and release notes reflect learner impact.
