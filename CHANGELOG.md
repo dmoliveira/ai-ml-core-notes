@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.36.0] - 2026-03-10
+
+- Improved interview-prep docs with a weak-answer repair loop for clearer, metric-backed response revision.
+- Improved interview quiz docs with a topic escalation loop that gates mixed rounds on focused-topic gains.
+- Improved continuity between interview answer quality feedback and timed practice progression.
+
 ## [0.35.0] - 2026-03-10
 
 - Improved summaries docs with a revision confidence loop for active recall and fast correction before progression.
