@@ -32,3 +32,10 @@ After baseline completion, add an operations pass:
 2. Add a rollback trigger for unsafe or degraded behavior.
 3. Simulate one failure and capture incident notes.
 4. Update your failure matrix with prevention controls.
+
+## Agent run debrief loop
+
+1. Pick one run with unexpected agent behavior.
+2. Classify root cause as planning, tool call, or guardrail miss.
+3. Apply one prompt/policy/tooling fix and re-run the same task.
+4. Keep the fix only if intervention rate drops without new failures.
