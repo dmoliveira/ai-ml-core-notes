@@ -34,6 +34,15 @@ Recommended progression:
 - One-paragraph architecture rationale.
 - One reliability risk and mitigation plan.
 
+## Rollback-and-replay loop
+
+Use this loop when model quality improves but operational risk rises:
+
+1. Capture one failing scenario with inputs, outputs, and latency.
+2. Replay the same scenario on baseline and new model versions.
+3. Compare quality gain against reliability and cost regressions.
+4. Roll back by default unless the new model wins on the chosen objective.
+
 ## External references
 
 - PyTorch tutorials: https://pytorch.org/tutorials/
