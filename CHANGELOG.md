@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.33.0] - 2026-03-10
+
+- Improved deep-learning docs with a rollback-and-replay loop for comparing quality gains against reliability and cost regressions.
+- Improved Lab 03 guidance with an agent run debrief loop for root-cause classification and controlled retesting.
+- Improved continuity between model iteration choices and operations-focused guardrail decisions.
+
 ## [0.32.0] - 2026-03-10
 
 - Improved machine-learning docs with a baseline regression loop for preserving gains while iterating quickly.
