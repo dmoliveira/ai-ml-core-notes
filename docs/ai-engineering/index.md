@@ -40,6 +40,15 @@ Use this mini playbook before production rollout:
 3. Add one containment control per failure class.
 4. Run one game-day scenario and document corrective actions.
 
+## Live verification loop
+
+Pair operational controls with hosted checks:
+
+1. Run `tools/ux/live_pages_check.py` against the deployment URL.
+2. Review `practice/live-check-dashboard.md` for failures and freshness.
+3. Link one failing route to an owner and mitigation action.
+4. Re-run checks after the fix and capture evidence in release notes.
+
 ## External references
 
 - MLOps landscape: https://landscape.lfai.foundation/
