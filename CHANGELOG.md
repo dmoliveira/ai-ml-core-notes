@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.23.0] - 2026-03-02
+
+- Improved docs home with a 15-minute quick path and clearer goal-based entry navigation.
+- Improved onboarding clarity by adding explicit choose-by-goal links on the docs landing page.
+- Improved wiki start-page utility with fast links to roadmap, start path, practice, and interview prep.
+
 ## [0.22.0] - 2026-03-02
 
 - Improved contribution guidance with a quick-start flow, release cadence expectations, and stronger validation/evidence notes.
