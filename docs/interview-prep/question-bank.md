@@ -48,3 +48,10 @@ Use this bank for mock interviews and self-evaluation.
 2. Rewrite the answer using `context -> approach -> metric -> risk -> fallback`.
 3. Re-run a related prompt in the quiz UI (`practice/quiz-web.md`).
 4. Record one sentence about what improved.
+
+## Cross-level progression loop
+
+1. Answer one junior, one mid, and one senior question in sequence.
+2. Keep a consistent structure while increasing trade-off depth by level.
+3. Identify one repeated weakness across all three answers.
+4. Re-answer the senior prompt after fixing that weakness.
