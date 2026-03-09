@@ -30,6 +30,15 @@ Use this bridge before jumping into deep learning:
 - You can diagnose overfitting, leakage, and class imbalance issues.
 - You can describe one problem where deep representation learning is likely better.
 
+## Evaluation-to-iteration loop
+
+Use this loop to improve baseline quality before adding complexity:
+
+1. Pick one metric aligned to the use case.
+2. Identify the weakest segment (class, cohort, or scenario).
+3. Apply one targeted change (features, threshold, or sampling).
+4. Re-run and keep only changes with measurable improvement.
+
 ## External references
 
 - Scikit-learn user guide: https://scikit-learn.org/stable/user_guide.html
