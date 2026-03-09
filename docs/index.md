@@ -43,3 +43,10 @@ If you are short on time, do this first:
 If this open project accelerates your learning, you can support maintenance at:
 
 - https://buy.stripe.com/8x200i8bSgVe3Vl3g8bfO00
+
+## Weekly navigation loop
+
+1. Choose one primary path for the week (foundations, practice, or interview).
+2. Pick one secondary check from a different path to prevent blind spots.
+3. End the week with one short debrief note on what to repeat or change.
+4. Carry one concrete next action into the next week.
