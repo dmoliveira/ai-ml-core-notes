@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.44.0] - 2026-03-10
+
+- Improved FAQ with a restart loop for resuming study momentum after breaks using small confidence checkpoints.
+- Improved project plan with a continuity checkpoint loop for objective alignment, reproducible validation, and learner-impact release closure.
+- Improved continuity between learner pacing and release execution quality controls.
+
 ## [0.43.0] - 2026-03-10
 
 - Improved summaries docs with a transfer-to-practice loop that converts revision takeaways into measurable lab actions.
