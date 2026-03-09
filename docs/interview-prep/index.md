@@ -45,6 +45,15 @@ Use this when you want faster feedback on progress:
 - `Needs work`: generic statements, missing metrics, or no failure/rollback thinking.
 - `Great follow-up`: add one metric, one risk, and one mitigation to any weak answer.
 
+## Weak-answer repair loop
+
+Use this loop after any practice session with low-confidence answers:
+
+1. Pick one weak answer and rewrite it using metric-risk-mitigation structure.
+2. Add one concrete trade-off that was missing in the first attempt.
+3. Re-answer the same question in under 90 seconds.
+4. Keep the new version only if it is clearer and more testable.
+
 ## External references
 
 - Kaggle interview discussions: https://www.kaggle.com/discussions
