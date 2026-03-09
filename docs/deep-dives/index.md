@@ -23,3 +23,11 @@ Recommended loop:
 - A concise decision note (what you would choose and why).
 - One metric plan for validation.
 - One failure mode and mitigation strategy.
+
+## Fast deep-dive note template
+
+- Topic: what specific concept or architecture are you analyzing?
+- Decision: what would you choose right now?
+- Evidence: which metric or observation supports the decision?
+- Risk: what can fail first?
+- Mitigation: what is the smallest control to reduce that risk?
