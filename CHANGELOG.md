@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.28.0] - 2026-03-02
+
+- Improved machine-learning docs with an evaluation-to-iteration loop for metric-driven baseline improvement.
+- Improved Lab 02 guidance with a RAG evaluation checklist focused on retrieval quality and failure-pattern fixes.
+- Improved continuity from baseline measurement to targeted iteration across classic ML and RAG practice.
+
 ## [0.27.0] - 2026-03-02
 
 - Improved foundations docs with a baseline quality loop for failure-mode detection and control selection.
