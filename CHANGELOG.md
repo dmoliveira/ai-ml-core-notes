@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.34.0] - 2026-03-10
+
+- Improved foundations docs with an assumption-check loop for stress-testing baseline confidence before trusting strong metrics.
+- Improved Lab 01 guidance with a post-retrospective iteration loop for focused metric recovery without destabilizing overall performance.
+- Improved continuity between core learning assumptions and practical tabular improvement decisions.
+
 ## [0.33.0] - 2026-03-10
 
 - Improved deep-learning docs with a rollback-and-replay loop for comparing quality gains against reliability and cost regressions.
