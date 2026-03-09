@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.43.0] - 2026-03-10
+
+- Improved summaries docs with a transfer-to-practice loop that converts revision takeaways into measurable lab actions.
+- Improved deep-dives docs with a depth-to-roadmap loop that links analysis decisions to implementation milestones.
+- Improved continuity between learning depth, practical execution, and release planning quality.
+
 ## [0.42.0] - 2026-03-10
 
 - Improved senior interview prep with an executive decision loop for business objective, trade-off, governance, and validation framing.
