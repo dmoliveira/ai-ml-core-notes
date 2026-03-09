@@ -27,3 +27,10 @@ Use this track for AI engineer or mid-level ML engineer interviews.
 - Proposing architecture changes without success criteria.
 - Ignoring experiment reproducibility and versioning details.
 - Failing to define rollback triggers for production regressions.
+
+## Scenario debrief loop
+
+1. Restate the scenario goal and constraint in one line.
+2. Compare two options with a clear trade-off.
+3. Define one metric guardrail and one rollback trigger.
+4. Summarize the chosen path and first validation step.
