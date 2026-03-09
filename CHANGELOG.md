@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.24.0] - 2026-03-02
+
+- Improved interview-prep docs with an explicit prep-plus-quiz feedback loop.
+- Improved interview quiz docs with recommended usage loop, difficulty ladder examples, and after-action checklist.
+- Improved progression clarity from study preparation to timed assessment iteration.
+
 ## [0.23.0] - 2026-03-02
 
 - Improved docs home with a 15-minute quick path and clearer goal-based entry navigation.
