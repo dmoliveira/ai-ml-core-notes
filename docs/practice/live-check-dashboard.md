@@ -30,6 +30,13 @@ python tools/ux/render_live_dashboard.py docs/stats/live-pages-latest.json live-
 - `paths` in the status line shows how many routes were monitored in that run.
 - The `Error` column surfaces `errorType` or message for faster triage.
 
+## Incident triage loop
+
+1. Filter `Errors Only` to isolate failing routes.
+2. Sort issues by highest learner impact first (home, practice, interview pages).
+3. Assign owner + mitigation for each failing route.
+4. Re-run snapshot and confirm `Errors` returns to zero.
+
 <link rel="stylesheet" href="../../assets/leaderboard-viewer.css">
 
 <div class="lb-app">
