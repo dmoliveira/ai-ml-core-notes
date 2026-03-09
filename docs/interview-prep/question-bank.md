@@ -41,3 +41,10 @@ Use this bank for mock interviews and self-evaluation.
 - What assumption did I forget to state?
 - Which metric should I have prioritized?
 - What would be my rollback or mitigation plan?
+
+## Feedback escalation loop
+
+1. Pick your lowest-confidence question.
+2. Rewrite the answer using `context -> approach -> metric -> risk -> fallback`.
+3. Re-run a related prompt in the quiz UI (`practice/quiz-web.md`).
+4. Record one sentence about what improved.

@@ -15,6 +15,15 @@ Use [Verify Shared Result](verify-shared-result.md) to validate a signed shared 
 
 Start with topics + question count, then use Advanced settings only when needed.
 
+## Post-quiz improvement loop
+
+Use this after each run:
+
+1. Identify the weakest topic from final analytics.
+2. Revisit 2-3 related prompts in `interview-prep/question-bank.md`.
+3. Run a new short quiz with only that topic.
+4. Compare score and timing before returning to mixed mode.
+
 <link rel="stylesheet" href="../../assets/quiz-web.css">
 
 <div class="quiz-app">
