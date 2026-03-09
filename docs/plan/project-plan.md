@@ -140,3 +140,10 @@ Each topic is complete when all criteria pass:
 - Task 4.2: Sponsorship and maintenance signals
   - Subtask 4.2.1: Configure funding channels
   - Subtask 4.2.2: Add release notes and changelog cadence
+
+## Release planning loop
+
+1. Pick one narrow learner-facing objective for the next release.
+2. Limit changes to adjacent sections that improve continuity.
+3. Validate docs and quiz tooling before opening the PR.
+4. Capture one changelog line focused on learner outcome.
