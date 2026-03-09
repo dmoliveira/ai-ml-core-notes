@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.26.0] - 2026-03-02
+
+- Improved AI engineering docs with a compact agent operations playbook for failure classes, ownership, containment, and game-day validation.
+- Improved Lab 03 guidance with an operations-focused extension covering alerts, rollback triggers, and incident-note capture.
+- Improved agent production-readiness path from prototype behavior to operational controls.
+
 ## [0.25.0] - 2026-03-02
 
 - Improved summaries docs with a clear bridge from fast revision into targeted deep-dive study.
