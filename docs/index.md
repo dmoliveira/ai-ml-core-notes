@@ -2,6 +2,15 @@
 
 Welcome to a practical AI learning system that helps you move from fundamentals to production-ready AI engineering.
 
+## 15-minute quick path
+
+If you are short on time, do this first:
+
+1. Read [Roadmap](plan/project-plan.md) goals.
+2. Review [Foundations](foundations/index.md) key concepts.
+3. Answer 3 prompts from [Interview Prep Question Bank](interview-prep/question-bank.md).
+4. Run one activity from [Practice Labs](practice/index.md).
+
 ## Start here
 
 1. Read the [Roadmap](plan/project-plan.md)
@@ -20,6 +29,14 @@ Welcome to a practical AI learning system that helps you move from fundamentals 
 - Design robust AI agent systems with tooling and memory
 - Communicate trade-offs in interviews and real projects
 - Build confidence through repeatable lab exercises and retrospectives
+
+## Choose by goal
+
+- Fast revision: [Summaries](summaries/index.md)
+- Deep depth: [Deep Dives](deep-dives/index.md)
+- Interview drills: [Interview Prep](interview-prep/index.md)
+- Practice-first path: [Practice Labs](practice/index.md)
+- Reliability and operations: [AI Engineering](ai-engineering/index.md)
 
 ## Support this work
 
