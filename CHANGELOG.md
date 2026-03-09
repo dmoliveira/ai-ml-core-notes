@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.29.0] - 2026-03-02
+
+- Improved interview question bank docs with a feedback-escalation loop for rewriting and retesting weak answers.
+- Improved quiz web docs with a post-quiz improvement loop that links analytics to targeted topic drills.
+- Improved continuity between interview preparation and quiz-based progress iteration.
+
 ## [0.28.0] - 2026-03-02
 
 - Improved machine-learning docs with an evaluation-to-iteration loop for metric-driven baseline improvement.
