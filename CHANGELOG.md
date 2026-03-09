@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.38.0] - 2026-03-10
+
+- Improved wiki docs with a sync check loop to keep quick links accurate and verified.
+- Improved project planning docs with a release planning loop for narrow, learner-focused increments.
+- Improved continuity between release execution cadence and learner-facing documentation quality.
+
 ## [0.37.0] - 2026-03-10
 
 - Improved docs home with a weekly navigation loop to keep multi-path study plans focused and actionable.
