@@ -56,3 +56,12 @@ Use a narrow reset loop:
 2. Add one small practice task tied to that section.
 3. Write one confusion point and resolve it with one targeted read.
 4. Resume broader navigation only after confidence improves.
+
+## How do I restart after a break without losing momentum?
+
+Use a restart loop:
+
+1. Re-read one summary page and one prior debrief note.
+2. Run one short practice task in under 30 minutes.
+3. Write one confidence gap and one next action.
+4. Resume the normal weekly loop from that next action.
