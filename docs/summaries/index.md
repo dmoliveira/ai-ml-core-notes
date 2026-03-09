@@ -20,6 +20,15 @@ Use this section for rapid revision.
 3. Answer one question from `interview-prep/question-bank.md`.
 4. Run one related exercise from `practice/index.md`.
 
+## Revision to deep-dive bridge
+
+Use this bridge when a summary exposes gaps:
+
+1. Mark one weak concept from your revision loop.
+2. Open the matching topic in `deep-dives/index.md`.
+3. Write one trade-off and one mitigation note.
+4. Re-test the concept with one question from `interview-prep/question-bank.md`.
+
 ## Progress signals
 
 - You can explain a concept without rereading the page.
