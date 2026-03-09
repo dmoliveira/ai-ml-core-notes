@@ -27,3 +27,10 @@ Use this track for senior/principal AI engineering and technical leadership role
 - Over-indexing on tooling and under-specifying operating model.
 - Skipping cost controls and multi-team governance boundaries.
 - Presenting roadmap outcomes without measurable leading indicators.
+
+## Executive decision loop
+
+1. State the business objective and non-negotiable constraint.
+2. Compare two architecture options with cost, risk, and delivery impact.
+3. Define one governance control and one rollback boundary.
+4. Conclude with a 30-60-90 day validation plan.
