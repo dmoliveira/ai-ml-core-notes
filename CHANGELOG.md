@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.40.0] - 2026-03-10
+
+- Improved foundations docs with a concept transfer loop for checking understanding across domain examples.
+- Improved machine-learning docs with an error-segment recovery loop that gates fixes on local and global metric stability.
+- Improved continuity between concept understanding and practical model correction decisions.
+
 ## [0.39.0] - 2026-03-10
 
 - Improved practice docs with a weekly cadence loop that balances baseline replay with targeted improvement.
