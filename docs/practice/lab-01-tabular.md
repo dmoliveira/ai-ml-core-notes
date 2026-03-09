@@ -23,3 +23,10 @@ Train a reliable baseline classifier on tabular data, then improve it with targe
 - Reproducible script or notebook
 - Metrics table baseline vs improved
 - One-page lessons learned
+
+## Baseline robustness checklist
+
+- Did you check class imbalance before picking metrics?
+- Did you guard against leakage in features or split strategy?
+- Did you compare at least one calibration or threshold variant?
+- Did you document one failure mode and one mitigation?

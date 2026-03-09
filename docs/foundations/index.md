@@ -31,6 +31,15 @@ If a deep-dive section feels too heavy, return to foundations and re-run one pra
 - You can spot leakage or overfitting issues in a simple baseline.
 - You can justify one metric choice for a real use case.
 
+## Baseline quality loop
+
+Use this loop before moving into harder sections:
+
+1. Pick one baseline task from `practice/lab-01-tabular.md`.
+2. Identify one likely failure mode (leakage, imbalance, unstable split).
+3. Add one control (stratification, validation check, or threshold tuning).
+4. Re-run and record whether quality or robustness improved.
+
 ## External references
 
 - Kaggle micro-courses: https://www.kaggle.com/learn
