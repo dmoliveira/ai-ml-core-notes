@@ -27,3 +27,10 @@ Use this track if you are preparing for internship or junior AI/ML roles.
 - Treating accuracy as the only metric when classes are imbalanced.
 - Explaining model choice without discussing data quality or leakage.
 - Skipping error analysis by segment (for example, minority classes).
+
+## Answer structure loop
+
+1. Start with one direct answer sentence.
+2. Add one metric or concrete example.
+3. Mention one common failure mode.
+4. End with one mitigation or next check.
