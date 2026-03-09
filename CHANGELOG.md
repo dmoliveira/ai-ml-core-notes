@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.32.0] - 2026-03-10
+
+- Improved machine-learning docs with a baseline regression loop for preserving gains while iterating quickly.
+- Improved Lab 02 guidance with a failure-to-fix loop for targeted RAG remediation and retesting.
+- Improved continuity between evaluation findings and measurable next actions in ML and retrieval workflows.
+
 ## [0.31.0] - 2026-03-02
 
 - Improved AI agents docs with an explicit evaluation loop to compare baseline and autonomous workflows before scaling autonomy.
