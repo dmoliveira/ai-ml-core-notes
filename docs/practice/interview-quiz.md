@@ -52,3 +52,10 @@ Use simulation mode for demos, CI smoke checks, or scripted walkthroughs.
 - Which topic had the weakest accuracy?
 - Did time pressure reduce answer quality?
 - What concept should be reviewed before the next run?
+
+## Topic escalation loop
+
+1. Run one focused-topic quiz and capture weak areas.
+2. Re-run the same topic after one targeted review pass.
+3. Escalate to mixed topics only when focused accuracy improves.
+4. Keep one carry-forward note to guide the next timed session.
