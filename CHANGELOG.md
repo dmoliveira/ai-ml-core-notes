@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.42.0] - 2026-03-10
+
+- Improved senior interview prep with an executive decision loop for business objective, trade-off, governance, and validation framing.
+- Improved question bank with a cross-level progression loop that scales answer depth from junior to senior prompts.
+- Improved continuity between interview progression and production-minded architecture communication.
+
 ## [0.41.0] - 2026-03-10
 
 - Improved junior interview prep with an answer-structure loop to improve clarity, metrics, and mitigation framing.
