@@ -53,3 +53,10 @@ Pair operational controls with hosted checks:
 
 - MLOps landscape: https://landscape.lfai.foundation/
 - OpenTelemetry docs: https://opentelemetry.io/docs/
+
+## Deployment readiness loop
+
+1. Validate one critical path with real request payloads.
+2. Confirm monitoring, alert routing, and rollback trigger coverage.
+3. Rehearse one incident response path end-to-end.
+4. Release only after evidence is captured for all three checks.
