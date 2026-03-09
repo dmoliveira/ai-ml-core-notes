@@ -7,6 +7,13 @@ Use this helper to verify a shared quiz link signature before trusting its conte
 3. Check diagnostics (signature, parameters, payload size).
 4. Copy decoded JSON if needed.
 
+## Verification incident loop
+
+1. Verify the shared URL and inspect diagnostics.
+2. If signature is invalid, treat the payload as untrusted.
+3. Compare expected/provided signatures and confirm source URL.
+4. Re-generate and re-verify before sharing results externally.
+
 <div class="quiz-app">
   <div class="quiz-control">
     <label for="verify-share-url">Shared URL</label>

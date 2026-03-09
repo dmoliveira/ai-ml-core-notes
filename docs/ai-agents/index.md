@@ -33,6 +33,13 @@ Recommended progression:
 - One failure taxonomy (tool errors, hallucinations, loop failures).
 - One containment strategy (timeouts, policy checks, human-in-the-loop).
 
+## Agent evaluation loop
+
+1. Run one baseline workflow without autonomy.
+2. Run one agent-enabled workflow on the same task set.
+3. Compare quality, latency, and intervention rate.
+4. Keep only autonomy settings that improve outcomes without raising risk.
+
 ## External references
 
 - OpenAI cookbook: https://cookbook.openai.com/
