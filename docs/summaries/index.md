@@ -34,3 +34,10 @@ Use this bridge when a summary exposes gaps:
 - You can explain a concept without rereading the page.
 - You can name one practical trade-off and one failure risk.
 - Your practice and interview answers become shorter and clearer.
+
+## Revision confidence loop
+
+1. Pick one summary concept you still hesitate to explain.
+2. Write a two-sentence explanation without looking at notes.
+3. Compare against the source page and correct one missing detail.
+4. Re-test with one interview-style question before moving on.
