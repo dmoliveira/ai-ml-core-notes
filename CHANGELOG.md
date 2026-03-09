@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.30.0] - 2026-03-02
+
+- Improved AI engineering docs with a live verification loop tying operational controls to hosted smoke checks.
+- Improved live dashboard docs with an incident triage loop for error isolation, ownership, and fix confirmation.
+- Improved continuity between runbook operations and live pages health validation.
+
 ## [0.29.0] - 2026-03-02
 
 - Improved interview question bank docs with a feedback-escalation loop for rewriting and retesting weak answers.
