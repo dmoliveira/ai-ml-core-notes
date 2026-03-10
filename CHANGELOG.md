@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.46.0] - 2026-03-10
+
+- Improved interview-prep docs with an interview-to-practice bridge loop for converting weak answers into targeted exercises.
+- Improved interview quiz docs with a debrief-to-drill loop for rapid topic remediation and measured score deltas.
+- Improved continuity between interview reflection and practical skill reinforcement.
+
 ## [0.45.0] - 2026-03-10
 
 - Improved AI agents docs with a rollback readiness loop to tie autonomy settings to explicit recovery expectations.
