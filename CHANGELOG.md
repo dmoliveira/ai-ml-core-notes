@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.45.0] - 2026-03-10
+
+- Improved AI agents docs with a rollback readiness loop to tie autonomy settings to explicit recovery expectations.
+- Improved live check dashboard docs with a verification handoff loop for ownership, rechecks, and closure evidence.
+- Improved continuity between agent operation guardrails and release verification practice.
+
 ## [0.44.0] - 2026-03-10
 
 - Improved FAQ with a restart loop for resuming study momentum after breaks using small confidence checkpoints.
