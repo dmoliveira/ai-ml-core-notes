@@ -58,3 +58,10 @@ Use this loop after any practice session with low-confidence answers:
 
 - Kaggle interview discussions: https://www.kaggle.com/discussions
 - LeetCode ML collections: https://leetcode.com/
+
+## Interview-to-practice bridge loop
+
+1. Pick one weak interview answer from the last prep session.
+2. Map it to one hands-on exercise in the practice section.
+3. Re-answer the same question after completing the exercise.
+4. Keep the new answer only if clarity and trade-off depth improved.

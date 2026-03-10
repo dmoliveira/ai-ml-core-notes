@@ -59,3 +59,10 @@ Use simulation mode for demos, CI smoke checks, or scripted walkthroughs.
 2. Re-run the same topic after one targeted review pass.
 3. Escalate to mixed topics only when focused accuracy improves.
 4. Keep one carry-forward note to guide the next timed session.
+
+## Debrief-to-drill loop
+
+1. Pick the lowest-scoring topic from your last quiz summary.
+2. Run one short targeted drill on that topic within 24 hours.
+3. Re-run a mixed quiz and compare topic delta.
+4. Carry forward one mitigation note into the next timed session.
