@@ -44,3 +44,10 @@ Recommended progression:
 
 - OpenAI cookbook: https://cookbook.openai.com/
 - Anthropic prompt engineering: https://docs.anthropic.com/
+
+## Agent rollback readiness loop
+
+1. Define one hard stop condition for unsafe or unstable behavior.
+2. Map that condition to an alert and owner response path.
+3. Rehearse rollback with one representative failure scenario.
+4. Keep autonomy settings only if rollback recovery meets target time.
