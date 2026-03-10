@@ -178,3 +178,10 @@ document.getElementById("live-refresh").addEventListener("click", toggleAutoRefr
 document.getElementById("live-filter").addEventListener("change", renderRows);
 loadLiveSnapshot();
 </script>
+
+## Verification handoff loop
+
+1. Capture failing route, error type, and timestamp from the dashboard.
+2. Link each failure to a concrete owner and mitigation action.
+3. Re-run live checks after the fix and compare deltas.
+4. Record closure evidence in changelog/release notes.
